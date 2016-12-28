@@ -3,6 +3,7 @@
 from struct import pack
 from subprocess import call
 from constants import STAGE2_SIZE, constants
+from os import environ, path, name as osname
 
 REGION = "usa"
 
@@ -13,22 +14,28 @@ for name, regions in constants.items():
     globals()[name] = regions[REGION]
 
 def p(x):
-  return pack("<I", x)
+    return pack("<I", x)
 
 def pb(x):
-  return pack(">I", x)
+    return pack(">I", x)
+
+def get_arm_none_eabi_binutils_exec(name):
+    exec_path = path.join(environ["DEVKITARM"], "bin", "arm-none-eabi-{0}".format(name))
+    if osname == "nt":
+        exec_path = ''.join((exec_path[1], ':', exec_path[2:])).replace('/', '\\')
+    return exec_path
 
 def get_shellcode():
-  # assemble stage 2
-  call(["arm-none-eabi-gcc", "-x", "assembler-with-cpp", "-nostartfiles",
+    # assemble stage 2
+    call([get_arm_none_eabi_binutils_exec("gcc"), "-x", "assembler-with-cpp", "-nostartfiles",
         "-nostdlib", "-o", "stage2.bin", "stage2.s"])
-  # generate raw instruction bytes
-  call(["arm-none-eabi-objcopy", "-O", "binary", "stage2.bin"])
-  # read in the shellcode
-  with open('stage2.bin', 'rb') as f:
-    payload = f.read()
-    assert len(payload) == STAGE2_SIZE
-    return payload
+    # generate raw instruction bytes
+    call([get_arm_none_eabi_binutils_exec("objcopy"), "-O", "binary", "stage2.bin"])
+    # read in the shellcode
+    with open('stage2.bin', 'rb') as f:
+        payload = f.read()
+        assert len(payload) == STAGE2_SIZE
+        return payload
 
 # end = end1 + end2 in the code, pick end2 so end wraps to start+4
 desired_end = start + 4 # to make size 4
