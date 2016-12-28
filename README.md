@@ -15,6 +15,8 @@ of the firmware for which the sound app is available.
 | sound constants | ✓ | ✓ | ✗ |
 | stage2 payload constants | ✗ | ✗ | ✗ |
 
+If all three boxes are checked (only USA atm), then put otherapp.bin on your SD card along with soundhax.m4a and launch the song from the sound player.
+
 ## Regions and Versions
 
 I only had a USA 3DS on 11.2, so I tested on that version. Other regions coming
