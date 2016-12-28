@@ -58,7 +58,8 @@ gpu_enqueue_gadget
 constants = {
     "fake_free_chunk": {
         "usa": 0x15D62F10,
-        "jpn": 0x15D62F10},
+        "jpn": 0x15D62F10
+        },
     "heapctx": {
         "usa": 0x0039B560,
         "jpn": 0x0039B520
