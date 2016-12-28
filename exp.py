@@ -32,7 +32,7 @@ def get_arm_none_eabi_binutils_exec(name):
 def get_shellcode():
     # assemble stage 2
     call([get_arm_none_eabi_binutils_exec("gcc"), "-x", "assembler-with-cpp", "-nostartfiles",
-        "-nostdlib", "-o", "stage2.bin", "stage2.s"])
+        "-nostdlib", "-D", REGION.upper(), "-o", "stage2.bin", "stage2.s"])
     # generate raw instruction bytes
     call([get_arm_none_eabi_binutils_exec("objcopy"), "-O", "binary", "stage2.bin"])
     # read in the shellcode
