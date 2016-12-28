@@ -19,7 +19,7 @@ If all three boxes are checked (only USA atm), then put [otherapp.bin](https://s
 
 ## Regions and Versions
 
-I only had a USA 3DS on 11.2, so I tested on that version. Other regions coming
+I only had a USA N3DS on 11.2, so I tested on that version. Other regions coming
 soon.
 
 ## Installation
