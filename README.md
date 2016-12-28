@@ -13,7 +13,7 @@ of the firmware for which the sound app is available.
 | --- | --- | --- | --- |
 | bug confirmed | ✓  | ✓  | ✓  |
 | sound constants | ✓ | ✓ | ✗ |
-| stage2 payload constants | ✗ | ✗ | ✗ |
+| stage2 payload constants | ✓  | ✗ | ✗ |
 
 If all three boxes are checked (only USA atm), then put otherapp.bin on your SD card along with soundhax.m4a and launch the song from the sound player.
 
