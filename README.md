@@ -20,6 +20,7 @@ If all three boxes are checked (only USA atm), then put [otherapp.bin](https://s
 ## Regions and Versions
 
 | Version | N3DS | O3DS | 2DS |
+| US |
 | --- | --- | --- | --- |
 | 11.2 | ✓  | ✗  | ✗  |
 
