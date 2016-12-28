@@ -15,7 +15,7 @@ of the firmware for which the sound app is available.
 | sound constants | ✓ | ✓ | ✗ |
 | stage2 payload constants | ✓ | ✗ | ✗ |
 
-If all three boxes are checked (only USA atm), then put [otherapp.bin](https://smealum.github.io/3ds/) on your SD card along with soundhax.m4a and launch the song from the sound player.
+If all three boxes are checked (only USA atm), then put [otherapp.bin](https://smealum.github.io/3ds/) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
 ## Regions and Versions
 
