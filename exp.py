@@ -1,5 +1,6 @@
 #!/usr/bin/python2.7
 
+import sys
 from struct import pack
 from subprocess import call
 from constants import STAGE2_SIZE, constants
@@ -7,6 +8,9 @@ from os import environ, path, name as osname
 
 REGION = "usa"
 TYPE = "old" # "new"
+
+if len(sys.argv) > 1:
+    REGION = sys.argv[1].lower()
 
 for name, regions in constants.items():
     if REGION not in regions:
