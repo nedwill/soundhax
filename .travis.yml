@@ -1,0 +1,16 @@
+language: python
+
+python:
+  - "2.7"
+
+before_install:
+  - wget http://sourceforge.net/projects/devkitpro/files/Automated%20Installer/devkitARMupdate.pl
+  - export DEVKITPRO=/home/travis/devkitPro
+  - export DEVKITARM=${DEVKITPRO}/devkitARM
+  - export PATH=$PATH:$DEVKITARM/bin
+
+install:
+  - sudo perl devkitARMupdate.pl
+
+script:
+  - python exp.py
