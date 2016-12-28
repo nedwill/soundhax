@@ -23,8 +23,8 @@ I only had a USA 3DS on 11.2, so I tested on that version. Other regions coming
 soon.
 
 ## Installation
-1. Run `exp.py` (requires [python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/)) to build the final exploit files stage2.bin and soundhax.m4a.
-2. Save stage2.bin and soundhax.m4a to the root of the SD card.
+1. Run `exp.py` (requires [python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/)) to build the final exploit file soundhax.m4a.
+2. Save soundhax.m4a to the root of the SD card.
 3. Download the [otherapp payload](https://smealum.github.io/3ds/) for your 3DS version and save this as otherapp.bin at the root of the SD card.
 4. Download the [Homebrew Starter Kit](https://smealum.github.io/ninjhax2/starter.zip) and unzip to the root of the SD card (if it is not there already).
 5. Insert the SD card into the 3DS and start Nintendo 3DS Sound.
