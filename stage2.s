@@ -23,6 +23,7 @@
 #define FS_MOUNT_SDMC 0x0011FA90
 
 .text
+.global _start
 _start:
 /* Initialize stack. */
     mov  sp, #0x10000000
