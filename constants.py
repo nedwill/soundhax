@@ -3,7 +3,7 @@
 STAGE2_SIZE = 0x300
 
 """
-fake malloc chunk, located on our stack :)
+fake_free_chunk
 
 2nd dword needs to be big enough, and it is
 3rd, 4th dword are null so it looks like the list is empty
@@ -12,19 +12,16 @@ fake malloc chunk, located on our stack :)
 0x15D62F18:  0x00000000 ; prev
 0x15D62F1C:  0x00000000 ; next
 """
+fake_free_chunk = 0x15D62F10
 
 heapctx = 0x0039B560 # USA
 #heapctx = 0x0039B520 # JPN
-
-fake_free_chunk = 0x15D62F10
-malloc_free_list_head = heapctx + 0x3C
 
 """
 we don't want the corrupted chunk to get added to the free
 list when it's freed, so put fake size data in the header
 so it doesn't get added.
 """
-
 start = 0x140018AF
 end1 = 0x14001920
 
@@ -32,7 +29,6 @@ end1 = 0x14001920
 .text:001B5A5C                 LDMFD           SP!, {R4-R6,LR}
 .text:001B5A60                 B               sleep
 """
-
 sleep_gadget = 0x001B5A5C
 
 """

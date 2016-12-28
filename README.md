@@ -7,6 +7,14 @@ This bug is particularly good, because as far as I can tell it is the first
 ever homebrew exploit that is free, offline, and works on every version
 of the firmware for which the sound app is available.
 
+## Status
+
+| Status | USA | JPN | EUR |
+| --- | --- | --- | --- |
+| bug confirmed | ✓  | ✓  | ✓  |
+| sound constants | ✓ | ✓ | ✗ |
+| stage2 payload constants | ✗ | ✗ | ✗ |
+
 ## Regions and Versions
 
 I only had a USA 3DS on 11.2, so I tested on that version. Other regions coming
