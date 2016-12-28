@@ -23,7 +23,7 @@ If all three boxes are checked (only USA atm), then put [otherapp.bin](https://s
 | --- | --- | --- | --- |
 | US 11.2 | ✓  | ✗  | ✗  |
 | EU 11.2 | ✗  | ✗  | ✗  |
-| JPN 11.2 | ✓  | ✗  | ✗  |
+| JPN 11.2 | ✗  | ✗  | ✗  |
 
 ## Installation
 `exp.py`: builds final exploit file
