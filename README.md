@@ -21,8 +21,9 @@ If all three boxes are checked (only USA atm), then put [otherapp.bin](https://s
 
 | Version | N3DS | O3DS | 2DS |
 | --- | --- | --- | --- |
-| US |
-| 11.2 | ✓  | ✗  | ✗  |
+| US 11.2 | ✓  | ✗  | ✗  |
+| EU 11.2 | ✗  | ✗  | ✗  |
+| JPN 11.2 | ✓  | ✗  | ✗  |
 
 ## Installation
 `exp.py`: builds final exploit file
