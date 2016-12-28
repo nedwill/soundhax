@@ -58,58 +58,86 @@ gpu_enqueue_gadget
 constants = {
     "fake_free_chunk": {
         "usa": 0x15D62F10,
-        "jpn": 0x15D62F10
+        "eur": 0x15D62F10,
+        "jpn": 0x15D62F10,
+        "kor": 0xdeadbabe,
         },
     "heapctx": {
         "usa": 0x0039B560,
-        "jpn": 0x0039B520
+        "eur": 0x0039B580,
+        "jpn": 0x0039B520,
+        "kor": 0xdeadbabe,
         },
     "start": {
         "usa": 0x140018AF,
-        "jpn": 0x140018AF
+        "eur": 0x140018AF,
+        "jpn": 0x140018AF,
+        "kor": 0x140018AF,
         },
     "end1": {
         "usa": 0x14001920,
-        "jpn": 0x14001920
+        "eur": 0x14001920,
+        "jpn": 0x14001920,
+        "kor": 0x14001920,
         },
     "sleep_gadget": {
         "usa": 0x001B5A5C,
-        "jpn": 0x001B5A5C
+        "eur": 0x002F11C0,
+        "jpn": 0x002F0F28,
+        "kor": 0x0012A6C8,
         },
     "gpu_flushcache_gadget": {
         "usa": 0x002E2958,
-        "jpn": 0x002E2830
+        "eur": 0x002E2AC8,
+        "jpn": 0x002E2830,
+        "kor": 0x0012B730,
         },
     "gpu_enqueue_gadget": {
         "usa": 0x002E96FC,
-        "jpn": 0x002E95D4
+        "eur": 0x002E9428,
+        "jpn": 0x002E95D4,
+        "kor": 0x00131B0C,
         },
     "memcpy_gadget": {
         "usa": 0x0022DB1C,
-        "jpn": 0x0022DB1C
+        "eur": 0x0022DB1C,
+        "jpn": 0x0022DB1C,
+        "kor": 0x00228910,
         },
     "pop_r0_pc": {
         "usa": 0x002e6f80,
-        "jpn": 0x002e6e58
+        "eur": 0x002E70F0,
+        "jpn": 0x002E6E58,
+        "kor": 0x0012FA94,
         },
     "pop_r1_pc": {
         "usa": 0x0022B6C8,
-        "jpn": 0x0022B6C8
+        "eur": 0x0022B6C8,
+        "jpn": 0x0022B6C8,
+        "kor": 0x002220E0,
         },
     "payload_stack_addr": {
         "usa": 0x15D630C8,
-        "jpn": 0x15D630C8
+        "eur": 0x15D630C8,
+        "jpn": 0x15D630C8,
+        "kor": 0xdeadbabe,
         },
     "stage2_code_va": {
         "usa": 0x002F5D00,
-        "jpn": 0x002F5D00
+        "eur": 0x002F5D00,
+        "jpn": 0x002F5D00,
+        "kor": 0x002F5D00,
         },
     "pop_r2_thru_r6_pc": {
         "usa": 0x0021462C,
-        "jpn": 0x0021462C
+        "eur": 0x00108910,
+        "jpn": 0x0021462C,
+        "kor": 0x00148740,
         },
     "payload_heap_addr": {
         "usa": 0x14200000,
-        "jpn": 0x14200000
+        "eur": 0x14200000,
+        "jpn": 0x14200000,
+        "kor": 0x14200000,
         }
 }
