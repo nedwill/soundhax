@@ -1,4 +1,4 @@
-/* thesoundofhax stage 2 */
+/* soundhax stage 2 */
 /* ported by nedwill from freakyhax (plutoo), with permission */
 
 #define GSP_THREAD_OBJ_PTR  0x003BFFF0

@@ -9,7 +9,7 @@ of the firmware for which the sound app is available.
 
 ## Regions and Versions
 
-I only had a USA 3DS on 11.0, so I tested on that version. Other regions coming
+I only had a USA 3DS on 11.2, so I tested on that version. Other regions coming
 soon.
 
 ## Installation
@@ -55,11 +55,11 @@ Subv and Citra authors - for help emulating sound, this was invaluable
 
 plutoo   - stage 2 shellcode
 
-yellows8 - help with gpu address translation for gspwn
+yellows8 - help with gpu address translation for gspwn, initial JPN support
 
 smea     - homebrew launcher
 
-#cakey - advice and support
+\#cakey - advice and support
 
 PPP - teaching me everything I know
 
