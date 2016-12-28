@@ -2,7 +2,15 @@
 
 from struct import pack
 from subprocess import call
-from constants import *
+from constants import STAGE2_SIZE, constants
+
+REGION = "usa"
+
+for name, regions in constants.items():
+    if REGION not in regions:
+        print("Error: {} does not contain a constant for {}".format(REGION,
+                                                                    name))
+    globals()[name] = regions[REGION]
 
 def p(x):
   return pack("<I", x)
