@@ -9,11 +9,11 @@ of the firmware for which the sound app is available.
 
 ## Status
 
-| Status | USA | JPN | EUR |
-| --- | --- | --- | --- |
-| bug confirmed | ✓  | ✓  | ✓  |
-| sound constants | ✓ | ✓ | ✗ |
-| stage2 payload constants | ✓ | ✗ | ✗ |
+| Status | USA | JPN | EUR | KOR | CHN | TWN |
+| --- | --- | --- | --- | --- | --- | --- |
+| bug confirmed | ✓  | ✓  | ✓  | ✗ | ✗ | ✗ |
+| sound constants | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| stage2 payload constants | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ |
 
 If all three boxes are checked (only USA atm), then put [otherapp.bin](https://smealum.github.io/3ds/) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
@@ -21,9 +21,12 @@ If all three boxes are checked (only USA atm), then put [otherapp.bin](https://s
 
 | Version | N3DS | O3DS/2DS |
 | --- | --- | --- |
-| US 11.2 | ✓ | ✓ |
+| US 11.1-11.2 | ✓ | ✓ |
 | JPN 11.2 | ✗ | ✗ |
 | EUR 11.2 | ✗ | ✗ |
+| KOR 11.2 | ✗ | ✗ |
+| CHN 11.2 | ✗ | ✗ |
+| TWN 11.2 | ✗ | ✗ |
 
 ## Installation
 `exp.py`: builds final exploit file
