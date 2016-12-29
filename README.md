@@ -36,6 +36,8 @@ If all three boxes are checked (only USA atm), then put [otherapp.bin](https://s
 5. Insert the SD card into the 3DS and start Nintendo 3DS Sound.
 6. Run soundhax.m4a, and the Homebrew Launcher will load!
 
+Fixing the annoying bird: Click through all of the bird tips then close the app normally. When you exploit it it doesn't save the fact that you've opened the app before, so closing and reopening normally seems to fix this.
+
 ## Writeup
 
 ### The Bug
