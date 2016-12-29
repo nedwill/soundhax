@@ -21,7 +21,7 @@ If all three boxes are checked (only USA atm), then put [otherapp.bin](https://s
 
 | Version | N3DS | O3DS/2DS |
 | --- | --- | --- |
-| US 11.2 | ✓ | ✗ |
+| US 11.2 | ✓ | ✓ |
 | JPN 11.2 | ✗ | ✗ |
 | EUR 11.2 | ✗ | ✗ |
 
@@ -71,6 +71,8 @@ plutoo   - stage 2 shellcode
 yellows8 - help with gpu address translation for gspwn, initial JPN support
 
 smea     - homebrew launcher
+
+TuxSH - O3DS offset
 
 \#cakey - advice and support
 
