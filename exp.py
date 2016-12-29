@@ -12,6 +12,9 @@ TYPE = "old" # "new"
 if len(sys.argv) > 1:
     REGION = sys.argv[1].lower()
 
+if len(sys.argv) > 2:
+    TYPE = sys.argv[2].lower()
+
 for name, regions in constants.items():
     if REGION not in regions:
         print("Error: {} does not contain a constant for {}".format(REGION,
@@ -33,7 +36,7 @@ def get_arm_none_eabi_binutils_exec(name):
 def get_shellcode():
     # assemble stage 2
     call([get_arm_none_eabi_binutils_exec("gcc"), "-x", "assembler-with-cpp", "-nostartfiles",
-        "-nostdlib", "-D", REGION.upper(), "-o", "stage2.bin", "stage2.s"])
+        "-nostdlib", "-D", REGION.upper(), "-D", TYPE.upper(), "-o", "stage2.bin", "stage2.s"])
     # generate raw instruction bytes
     call([get_arm_none_eabi_binutils_exec("objcopy"), "-O", "binary", "stage2.bin"])
     # read in the shellcode
