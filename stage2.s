@@ -1,7 +1,7 @@
 /* soundhax stage 2 */
 /* ported by nedwill from freakyhax (plutoo), with permission */
 
-#define NEW 0 /* new or old? */
+//#define NEW /* new or old? */
 
 #define GSP_THREAD_OBJ_PTR  0x003BFFF0
 #define FS_OPEN_FILE 0x0022929C
@@ -16,7 +16,7 @@
 /* OTHERAPP_CODE_VA + 0x23D00000 */
 #define OTHERAPP_CODE_PA 0x23e01000
 #endif
-#define OTHERAPP_CODE_GPU (OTHERAPP_CODE_PA + 0xc000000)
+#define OTHERAPP_CODE_GPU (OTHERAPP_CODE_PA - 0xc000000)
 #define GSP_GET_HANDLE 0x0021C960
 #define PARAMBLK_ADDR 0x14000000
 #define GSP_GX_CMD4 0x002E9390
