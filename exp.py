@@ -237,5 +237,11 @@ def to_string(tree):
     _, res = internal(tree)
     return res
 
-with open('./soundhax.m4a', 'w') as f:
+if TYPE == "new":
+    fn = './soundhax-{}-{}.m4a'.format(REGION, "n3ds")
+else:
+    assert TYPE == "old"
+    fn = './soundhax-{}-{}.m4a'.format(REGION, "o3ds")
+
+with open(fn, 'wb') as f:
   f.write(to_string(l))

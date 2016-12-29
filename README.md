@@ -11,9 +11,9 @@ of the firmware for which the sound app is available.
 
 | Status | USA | JPN | EUR | KOR | CHN | TWN |
 | --- | --- | --- | --- | --- | --- | --- |
-| bug confirmed | ✓  | ✓  | ✓  | ✗ | ✗ | ✗ |
-| sound constants | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ |
-| stage2 payload constants | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| bug confirmed | ✓  | ✓ | ✓ | ✓ | ✗ | ✗ |
+| sound constants | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ |
+| stage2 payload constants | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ |
 
 If all three boxes are checked (only USA atm), then put [otherapp.bin](https://smealum.github.io/3ds/) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
@@ -21,7 +21,7 @@ If all three boxes are checked (only USA atm), then put [otherapp.bin](https://s
 
 | Version | N3DS | O3DS/2DS |
 | --- | --- | --- |
-| US 11.1-11.2 | ✓ | ✓ |
+| US 11.0-11.2 | ✓ | ✓ |
 | JPN 11.2 | ✗ | ✗ |
 | EUR 11.2 | ✗ | ✗ |
 | KOR 11.2 | ✗ | ✗ |
@@ -82,7 +82,11 @@ yellows8 - help with gpu address translation for gspwn, initial JPN support
 
 smea     - homebrew launcher
 
+d3m3vilurr - EUR, JPN, partial KOR support
+
 TuxSH - O3DS offset
+
+Konng - Testing EUR payloads
 
 \#cakey - advice and support
 
