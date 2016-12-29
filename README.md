@@ -20,13 +20,15 @@ of the firmware for which the sound app is available.
 | Version | N3DS | O3DS/2DS |
 | --- | --- | --- |
 | US 9.0-11.2 | ✓ | ✓ |
-| JPN 10.6-11.2 | ✓ | ✓ |
+| JPN 9.0-11.2 | ✓ | ✓ |
 | EUR 9.0-11.2 | ✓ | ✓ |
 | KOR ?-11.2 | ✗ | ✗ |
 | CHN ?-11.2 | ✗ | ✗ |
 | TWN ?-11.2 | ✗ | ✗ |
 
 If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/#otherapp) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
+
+While soundhax itself can be used with pre-v9.0, \*hax payload doesn't support pre-v9.0 currently.
 
 ## Installation
 1. Run `exp.py` (requires [python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/)) to build the final exploit file soundhax.m4a.
