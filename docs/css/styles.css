@@ -125,7 +125,7 @@ button#download{
   border-radius: 2px;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 1024px) {
   .logo img{
     margin-left: auto;
     margin-right: auto;
