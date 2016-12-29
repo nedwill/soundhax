@@ -28,6 +28,8 @@ of the firmware for which the sound app is available.
 
 If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/#otherapp) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
+While soundhax itself can be used with pre-v9.0, \*hax payload doesn't support pre-v9.0 currently.
+
 ## Installation
 1. Run `exp.py` (requires [python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/)) to build the final exploit file soundhax.m4a.
 2. Save soundhax.m4a to the root of the SD card.
