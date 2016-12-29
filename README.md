@@ -26,7 +26,7 @@ of the firmware for which the sound app is available.
 | CHN ?-11.2 | ✗ | ✗ |
 | TWN ?-11.2 | ✗ | ✗ |
 
-If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
+If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/#otherapp) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
 ## Installation
 1. Run `exp.py` (requires [python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/)) to build the final exploit file soundhax.m4a.
