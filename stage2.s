@@ -47,7 +47,7 @@
 #define SRV_SESSIONHANDLE 0x0038d1c4
 #define SRV_SEMAPHORE 0x0038d1b4
 #define GSP_THREAD_OBJ_PTR  0x0038CA20
-#define GSP_THREAD_OBJ_PTR_OFFSET 0x0038CA3C
+#define GSP_THREAD_OBJ_PTR_OFFSET 0x1C
 #define FS_OPEN_FILE 0x0022F094
 #define FS_READ_FILE 0x0010C83C
 #define GSP_GET_HANDLE 0x00223890
@@ -93,7 +93,7 @@ _start:
 /* Tell GSP thread to fuck off. */
     ldr  r0, =GSP_THREAD_OBJ_PTR
 #if defined(KOR)
-    ldr  r0, [r0,#(GSP_THREAD_OBJ_PTR_OFFSET - GSP_THREAD_OBJ_PTR)]
+    ldr  r0, [r0,#GSP_THREAD_OBJ_PTR_OFFSET]
 #endif
     mov  r1, #1
     strb r1, [r0, #0x77]

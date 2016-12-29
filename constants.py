@@ -66,7 +66,7 @@ constants = {
         "usa": 0x0039B560,
         "eur": 0x0039B580,
         "jpn": 0x0039B520,
-        "kor": 0x003b4520,
+        "kor": 0x003B4520,
         },
     "start": {
         "usa": 0x140018AF,
