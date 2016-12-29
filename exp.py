@@ -6,7 +6,8 @@ from subprocess import call
 from constants import STAGE2_SIZE, constants
 from os import environ, path, name as osname
 
-REGION = "usa"
+REGION = "eur"
+TYPE = "old" # "new"
 
 if len(sys.argv) > 1:
     REGION = sys.argv[1].lower()
@@ -74,8 +75,10 @@ def gpu_to_pa(gpua):
 # 16:06:09 @yellows8 | "> readmem:11usr=CtrApp 0x002F5d00 0x100"
 # "Using physical address: 0x27bf5d00 (in_address = 0x002f5d00)"
 def code_va_to_pa(va):
-  return va + 0x27900000
-
+  if TYPE == "old":
+    return va + 0x23D00000
+  else:
+    return va + 0x27900000
 #starts at this pop
 #.text:0027DB00 LDMFD           SP!, {R4-R10,PC}
 

@@ -12,21 +12,27 @@ of the firmware for which the sound app is available.
 | Status | USA | JPN | EUR |
 | --- | --- | --- | --- |
 | bug confirmed | ✓  | ✓  | ✓  |
-| sound constants | ✓ | ✓ | ✗ |
-| stage2 payload constants | ✓ | ✗ | ✗ |
+| sound constants | ✓ | ✓ | ✓ |
+| stage2 payload constants | ✓ | ✗ | ✓ |
 
-If all three boxes are checked (only USA atm), then put [otherapp.bin](https://smealum.github.io/3ds/) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
+If all three boxes are checked , then put [otherapp.bin](https://smealum.github.io/3ds/) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
 ## Regions and Versions
 
 | Version | N3DS | O3DS/2DS |
 | --- | --- | --- |
-| US 11.2 | ✓ | ✗ |
+| US 11.2 | ✓ | ✓ |
 | JPN 11.2 | ✗ | ✗ |
-| EUR 11.2 | ✗ | ✗ |
+| EUR 11.2 | ✓ | ✓ |
 
 ## Installation
-`exp.py`: builds final exploit file
+1. Manually define the type of console in stage2.s and exp.py (old/new)
+1. Run `exp.py region` (requires [python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/)) to build the final exploit file soundhax.m4a. "region" is the region you want, so "eur"/"usa"/etc.. Defaults to eur if no region is given.
+2. Save soundhax.m4a to the root of the SD card.
+3. Download the [otherapp payload](https://smealum.github.io/3ds/) for your 3DS version and save this as otherapp.bin at the root of the SD card.
+4. Download the [Homebrew Starter Kit](https://smealum.github.io/ninjhax2/starter.zip) and unzip to the root of the SD card (if it is not there already).
+5. Insert the SD card into the 3DS and start Nintendo 3DS Sound.
+6. Run soundhax.m4a, and the Homebrew Launcher will load!
 
 ## Writeup
 
@@ -71,6 +77,8 @@ plutoo   - stage 2 shellcode
 yellows8 - help with gpu address translation for gspwn, initial JPN support
 
 smea     - homebrew launcher
+
+TuxSH - O3DS offset
 
 \#cakey - advice and support
 
