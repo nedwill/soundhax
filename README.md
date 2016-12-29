@@ -20,7 +20,7 @@ of the firmware for which the sound app is available.
 | Version | N3DS | O3DS/2DS |
 | --- | --- | --- |
 | US 9.0-11.2 | ✓ | ✓ |
-| JPN 10.6-11.2 | ✓ | ✓ |
+| JPN 9.0-11.2 | ✓ | ✓ |
 | EUR 9.0-11.2 | ✓ | ✓ |
 | KOR ?-11.2 | ✗ | ✗ |
 | CHN ?-11.2 | ✗ | ✗ |
