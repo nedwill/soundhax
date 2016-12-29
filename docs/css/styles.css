@@ -76,7 +76,7 @@ button {
 }
 
 button.group{
-  border-width: 2px;
+  border: solid 2px;
   border-color: white;
   background-color: rgba(0,0,0,0);
   color: white;
@@ -105,7 +105,7 @@ button#download{
   color: white;
   font-size: 1.2rem;
   background-color: rgba(0,0,0,0);
-  border-width: 2px;
+  border:solid 2px;
   border-color: white;
   letter-spacing: 1px;
   margin-left: auto;
@@ -161,7 +161,7 @@ button#download{
     padding-left: 40px;
   }
   button.group{
-    border-width: 5px;
+    border: solid 5px;
     border-color: white;
     background-color: rgba(0,0,0,0);
     color: white;
@@ -180,7 +180,7 @@ button#download{
     color: white;
     font-size: 50px;
     background-color: rgba(0,0,0,0);
-    border-width: 5px;
+    border:solid 5px;
     border-color: white;
     margin-left: 20%;
     margin-right: 20%;
