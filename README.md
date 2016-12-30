@@ -7,14 +7,6 @@ This bug is particularly good, because as far as I can tell it is the first
 ever homebrew exploit that is free, offline, and works on every version
 of the firmware for which the sound app is available.
 
-## Status
-
-| Status | USA | JPN | EUR | KOR | CHN | TWN |
-| --- | --- | --- | --- | --- | --- | --- |
-| bug confirmed | ✓  | ✓ | ✓ | ✓ | ✗ | ✗ |
-| sound constants | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ |
-| stage2 payload constants | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ |
-
 ## Regions and Versions
 
 | Version | N3DS | O3DS/2DS |
@@ -30,15 +22,30 @@ If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/#o
 
 While soundhax itself can be used with pre-v9.0, \*hax payload doesn't support pre-v9.0 currently.
 
+## Status for KOR/CHN/TWN
+
+| Status | KOR | CHN | TWN |
+| --- | --- | --- | --- |
+| bug confirmed | ✓ | ✗ | ✗ |
+| sound constants | ✓ | ✗ | ✗ |
+| stage2 payload constants | ✓ | ✗ | ✗ |
+
+KOR is nearly complete thanks to yellows8's debugging.
+
 ## Installation
-1. Run `python exp.py` (requires [python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/)) to build the final exploit file soundhax.m4a.
-2. Save soundhax.m4a to the root of the SD card.
-3. Download the [otherapp payload](https://smealum.github.io/3ds/) for your 3DS version and save this as otherapp.bin at the root of the SD card.
+1. Download the relevant soundhax-region-console.m4a file for your device.
+2. Save the soundhax song file and copy to the root of your SD.
+3. Download the [otherapp payload](https://smealum.github.io/3ds/) for your 3DS version, rename it to `otherapp.bin`, and copy it to the root of the SD card.
 4. Download the [Homebrew Starter Kit](https://smealum.github.io/ninjhax2/starter.zip) and unzip to the root of the SD card (if it is not there already).
 5. Insert the SD card into the 3DS and start Nintendo 3DS Sound.
-6. Run soundhax.m4a, and the Homebrew Launcher will load!
+6. Locate your new song and play it to start the Homebrew Launcher!
 
 Fixing the annoying bird: Click through all of the bird tips then close the app normally. When you exploit it it doesn't save the fact that you've opened the app before, so closing and reopening normally seems to fix this.
+
+## Build
+Install [Python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/).
+
+Then run `python exp.py <usa/eur/jpn/kor> <new/old>` soundhax.m4a.
 
 ## Writeup
 
