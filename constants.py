@@ -60,7 +60,7 @@ constants = {
         "usa": 0x15D62F10,
         "eur": 0x15D62F10,
         "jpn": 0x15D62F10,
-        "kor": 0xdeadbabe,
+        "kor": 0x15D69A94,
         },
     "heapctx": {
         "usa": 0x0039B560,
@@ -120,7 +120,7 @@ constants = {
         "usa": 0x15D630C8,
         "eur": 0x15D630C8,
         "jpn": 0x15D630C8,
-        "kor": 0xdeadbabe,
+        "kor": 0x15D69C38,
         },
     "stage2_code_va": {
         "usa": 0x002F5D00,
