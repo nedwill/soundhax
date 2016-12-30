@@ -45,7 +45,7 @@ Fixing the annoying bird: Click through all of the bird tips then close the app 
 ## Build
 Install [Python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/).
 
-Then run `python exp.py <usa/eur/jpn/kor> <new/old>` soundhax.m4a.
+Then run `python exp.py <usa/eur/jpn/kor> <new/old>` to generate `soundhax-*.m4a`.
 
 ## Writeup
 
