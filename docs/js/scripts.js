@@ -13,7 +13,7 @@ $('button.group').on('click', function() {
   }
 
   if (   $('.region').children().hasClass('selected')
-      && $('.version').children().hasClass('selected')) {
+      && $('.console').children().hasClass('selected')) {
     $('#download').addClass('active');
   } else {
     $('#download').removeClass('active');
@@ -28,10 +28,10 @@ $('#download').on('click', function() {
   }
 
   var region = $('.region').children('.selected').attr('id');
-  var version = $('.version').children('.selected').attr('id');
+  var console_ = $('.console').children('.selected').attr('id');
 
   var base = "https://github.com/nedwill/soundhax/raw/master/";
-  var filename = "soundhax-{0}-{1}.m4a".format(region, version);
+  var filename = "soundhax-{0}-{1}.m4a".format(region, console_);
 
   window.location.href = base + filename;
 });
