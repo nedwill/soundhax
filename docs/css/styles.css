@@ -61,6 +61,7 @@ button {
   padding-right: 30px;
   padding-bottom: 10px;
   padding-left: 30px;
+  cursor: pointer;
 }
 .btn-group.region {
   margin-left: auto;
