@@ -14,7 +14,7 @@ of the firmware for which the sound app is available.
 | US 9.0-11.2 | ✓ | ✓ |
 | JPN 9.0-11.2 | ✓ | ✓ |
 | EUR 9.0-11.2 | ✓ | ✓ |
-| KOR ?-11.2 | ✗ | ✗ |
+| KOR 9.0-11.2 | ✓ | ✓ |
 | CHN ?-11.2 | ✗ | ✗ |
 | TWN ?-11.2 | ✗ | ✗ |
 
@@ -29,8 +29,6 @@ While soundhax itself can be used with pre-v9.0, \*hax payload doesn't support p
 | bug confirmed | ✓ | ✗ | ✗ |
 | sound constants | ✓ | ✗ | ✗ |
 | stage2 payload constants | ✓ | ✗ | ✗ |
-
-KOR is nearly complete thanks to yellows8's debugging.
 
 ## Installation
 1. Download the relevant soundhax-region-console.m4a file for your device.
@@ -87,7 +85,7 @@ Subv and Citra authors - for help emulating sound, this was invaluable
 
 plutoo   - stage 2 shellcode
 
-yellows8 - help with gpu address translation for gspwn, initial JPN support
+yellows8 - help with gpu address translation for gspwn, initial JPN support, finished KOR support
 
 smea     - homebrew launcher
 

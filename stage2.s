@@ -44,6 +44,8 @@
 
 #elif defined(KOR)
 
+#define SRV_SESSIONHANDLE 0x0038d1c4
+#define SRV_SEMAPHORE 0x0038d1b4
 #define GSP_THREAD_OBJ_PTR  0x0038CA20
 #define GSP_THREAD_OBJ_PTR_OFFSET 0x0038CA3C
 #define FS_OPEN_FILE 0x0022F094
@@ -97,6 +99,15 @@ _start:
     strb r1, [r0, #0x77]
     ldr  r0, [r0, #0x2C]
     svc  0x18
+#if defined(KOR) //A srv-notification thread is running that can't return from the thread-function. With KOR it's within the otherapp .text range. Overwrite the handle it uses so that it won't return from svcWaitSynchronizationN with the next call. Then send a notification so that it returns from waitsync for using the new handle.
+    svc 0x17 @ svcCreateEvent
+    ldr r3, =SRV_SEMAPHORE
+    str r1, [r3]
+
+    ldr r0, =0x207
+    mov r1, #0x1
+    bl srv_PublishToSubscriber
+#endif
 /* Mount SD card. */
 //    adr r0, sdmc_str
 //    ldr r1, =FS_MOUNT_SDMC
@@ -260,6 +271,27 @@ __fill_loop:
     bx    r4
 
 .pool
+
+#if defined(SRV_SESSIONHANDLE)
+srv_PublishToSubscriber:
+    push {r4, lr}
+    mrc p15, 0, r4, cr13, cr0, 3
+    add r4, r4, #0x80
+
+    ldr r2, =0x000C0080
+    str r2, [r4, #0]
+    str r0, [r4, #4]
+    str r1, [r4, #8]
+
+    ldr r0, =SRV_SESSIONHANDLE
+    ldr r0, [r0]
+    svc 0x32
+
+    cmp r0, #0
+    ldrge r0, [r4, #4]
+    pop {r4, pc}
+.pool
+#endif
 
 /* Force assembler error if payload becomes greater than 0x800. */
 .org 0x300, 0x45
