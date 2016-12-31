@@ -14,13 +14,13 @@ of the firmware for which the sound app is available.
 | US 9.0-11.2 | ✓ | ✓ |
 | JPN 9.0-11.2 | ✓ | ✓ |
 | EUR 9.0-11.2 | ✓ | ✓ |
-| KOR 9.0-11.2 | ✓ | ✓ |
+| KOR 9.6-11.2 | ✓ | ✓ |
 | CHN ?-11.2 | ✗ | ✗ |
 | TWN ?-11.2 | ✗ | ✗ |
 
 If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/#otherapp) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
-While soundhax itself can be used with pre-v9.0, \*hax payload doesn't support pre-v9.0 currently.
+While soundhax itself can be used with pre-v9.0(pre-v9.6 with KOR), \*hax payload doesn't support pre-v9.0(pre-v9.6 with KOR) currently.
 
 ## Status for KOR/CHN/TWN
 
