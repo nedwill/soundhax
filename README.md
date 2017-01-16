@@ -26,8 +26,8 @@ While soundhax itself can be used with pre-v9.0(pre-v9.6 with KOR), \*hax payloa
 
 | Status | KOR | CHN | TWN |
 | --- | --- | --- | --- |
-| bug confirmed | ✓ | ✗ | ✗ |
-| sound constants | ✓ | ✗ | ✗ |
+| bug confirmed | ✓ | ✓ | ✗ |
+| sound constants | ✓ | ✓ | ✗ |
 | stage2 payload constants | ✓ | ✗ | ✗ |
 
 ## Installation
