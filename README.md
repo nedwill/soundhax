@@ -11,16 +11,17 @@ of the firmware for which the sound app is available.
 
 | Version | N3DS | O3DS/2DS |
 | --- | --- | --- |
-| US 9.0-11.2 | ✓ | ✓ |
-| JPN 9.0-11.2 | ✓ | ✓ |
-| EUR 9.0-11.2 | ✓ | ✓ |
+| US 3.0-11.2 | ✓ | ✓ |
+| JPN 3.0-11.2 | ✓ | ✓ |
+| EUR 3.0-11.2 | ✓ | ✓ |
 | KOR 9.6-11.2 | ✓ | ✓ |
 | CHN ?-11.2 | ✗ | ✗ |
 | TWN ?-11.2 | ✗ | ✗ |
 
 If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/#otherapp) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
-While soundhax itself can be used with pre-v9.0(pre-v9.6 with KOR), \*hax payload doesn't support pre-v9.0(pre-v9.6 with KOR) currently.
+It can be used along [pre9otherapp](https://github.com/Pirater12/pre9otherapp) to launch an arm9 payload from the sd card on pre 9.0 firms(4.0 - 9.2).
+The bug seems to exist on 2.X sound app too but the rop gadgets and the va to pa translation function need to be updated to make it work.(This was confirmed by installing a 2.1 sound app on 4.1).
 
 ## Status for KOR/CHN/TWN
 
@@ -43,7 +44,7 @@ Fixing the annoying bird: Click through all of the bird tips then close the app 
 ## Build
 Install [Python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/).
 
-Then run `python exp.py <usa/eur/jpn/kor> <new/old>` to generate `soundhax-*.m4a`.
+Then run `python exp.py <usa/eur/jpn/kor> <new/old> <pre5/post5>` to generate `soundhax-*.m4a`.
 
 ## Writeup
 

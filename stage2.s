@@ -70,7 +70,11 @@
 #define OTHERAPP_CODE_PA 0x27a01000
 #else
 /* OTHERAPP_CODE_VA + 0x23D00000 */
+#if defined(PRE5)
+#define OTHERAPP_CODE_PA 0x23e01000 - 0x78000
+#elif defined(POST5)
 #define OTHERAPP_CODE_PA 0x23e01000
+#endif
 #endif
 #define OTHERAPP_CODE_GPU (OTHERAPP_CODE_PA - 0xc000000)
 

