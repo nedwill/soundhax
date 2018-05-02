@@ -76,6 +76,12 @@ button {
   text-align: center;
 }
 
+.btn-group.firmware {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; 
+}
+
 button.group{
   border: solid 2px;
   border-color: white;
