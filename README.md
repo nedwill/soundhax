@@ -11,12 +11,12 @@ of the firmware for which the sound app is available.
 
 | Version | N3DS | O3DS/2DS |
 | --- | --- | --- |
-| US 3.0-11.2 | ✓ | ✓ |
-| JPN 3.0-11.2 | ✓ | ✓ |
-| EUR 3.0-11.2 | ✓ | ✓ |
-| KOR 9.6-11.2 | ✓ | ✓ |
-| CHN ?-11.2 | ✗ | ✗ |
-| TWN ?-11.2 | ✗ | ✗ |
+| US 3.0-11.3 | ✓ | ✓ |
+| JPN 3.0-11.3 | ✓ | ✓ |
+| EUR 3.0-11.3 | ✓ | ✓ |
+| KOR 9.6-11.3 | ✓ | ✓ |
+| CHN ?-11.3 | ✗ | ✗ |
+| TWN ?-11.3 | ✗ | ✗ |
 
 If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/#otherapp) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
