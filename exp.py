@@ -3,12 +3,12 @@
 import sys
 from struct import pack
 from subprocess import call
-from constants import STAGE2_SIZE, constants
+from constants import STAGE2_SIZE, constants_21_22, constants_3x_and_later
 from os import environ, path, name as osname
 
 REGION = "usa"
-TYPE = "old" # "new"
-FIRM = "post5" # "pre5"
+TYPE = "old"
+FIRM = "post5"
 if len(sys.argv) > 1:
     REGION = sys.argv[1].lower()
 
@@ -16,8 +16,10 @@ if len(sys.argv) > 2:
     TYPE = sys.argv[2].lower()
 
 if len(sys.argv) > 3:
-	FIRM = sys.argv[3].lower()
-	
+    FIRM = sys.argv[3].lower()
+
+constants = constants_3x_and_later if FIRM != "v21and22" else constants_21_22
+
 for name, regions in constants.items():
     if REGION not in regions:
         print("Error: {} does not contain a constant for {}".format(REGION,
@@ -38,7 +40,7 @@ def get_arm_none_eabi_binutils_exec(name):
 
 def get_shellcode():
     # assemble stage 2
-    call([get_arm_none_eabi_binutils_exec("gcc"), "-x", "assembler-with-cpp", "-nostartfiles",
+    call([get_arm_none_eabi_binutils_exec("gcc"), "-x", "assembler-with-cpp", "-nostartfiles", "-mcpu=mpcore",
         "-nostdlib", "-D", REGION.upper(), "-D", TYPE.upper(), "-D", FIRM.upper(), "-o", "stage2.bin", "stage2.s"])
     # generate raw instruction bytes
     call([get_arm_none_eabi_binutils_exec("objcopy"), "-O", "binary", "stage2.bin"])
@@ -82,10 +84,10 @@ def gpu_to_pa(gpua):
 # "Using physical address: 0x27bf5d00 (in_address = 0x002f5d00)"
 def code_va_to_pa(va):
     if TYPE == "old":
-        if FIRM == "pre5":
-            return va + 0x23D00000 - 0x78000
-        else:
+        if FIRM == "post5":
             return va + 0x23D00000
+        else:
+            return va + 0x23D00000 - 0x78000
     else:
         return va + 0x27900000
 
@@ -252,9 +254,12 @@ if TYPE == "new":
     fn = './soundhax-{}-{}.m4a'.format(REGION, "n3ds")
 else:
     assert TYPE == "old"
-    
-    if FIRM == "pre5":
-      fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "pre5.0")
+
+    if FIRM == "v21and22":
+        assert REGION in ("usa", "eur", "jpn")
+        fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v2.1and2.2")
+    elif FIRM == "v3xand4x":
+      fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v3.xand4.x")
     else :
       fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "post5.0")
 

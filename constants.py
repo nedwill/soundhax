@@ -55,7 +55,93 @@ gpu_enqueue_gadget
 .text:002E9710                 LDMFD           SP!, {R4-R11,PC}
 """
 
-constants = {
+constants_21_22 = {
+    "fake_free_chunk": {
+        # same
+        "usa": 0x15D62F10,
+        "eur": 0x15D62F10,
+        "jpn": 0x15D62F10,
+        },
+    "heapctx": {
+        # same
+        "usa": 0x0039B560,
+        "eur": 0x0039B580,
+        "jpn": 0x0039B520,
+        },
+    "start": {
+        # same
+        "usa": 0x140018AF,
+        "eur": 0x140018AF,
+        "jpn": 0x140018AF,
+        },
+    "end1": {
+        # changed
+        "usa": 0x14001920,
+        "eur": 0x14001920,
+        "jpn": 0x14001920,
+        },
+    "sleep_gadget": {
+        "usa": 0x001B5A5C, #same, actually (!!)
+        "eur": 0x002F11B0, #changed
+        "jpn": 0x002F0F18, #changed
+        },
+    "gpu_flushcache_gadget": {
+        # changed
+        "usa": 0x002E2948,
+        "eur": 0x002E2AB8,
+        "jpn": 0x002E2820,
+        },
+    "gpu_enqueue_gadget": {
+        # changed
+        "usa": 0x002E96EC,
+        "eur": 0x002E9418,
+        "jpn": 0x002E95C4,
+        },
+    "memcpy_gadget": {
+        # same
+        "usa": 0x0022DB1C,
+        "eur": 0x0022DB1C,
+        "jpn": 0x0022DB1C,
+        },
+    "pop_r0_pc": {
+        # changed
+        "usa": 0x002E6F70,
+        "eur": 0x002E70E0,
+        "jpn": 0x002E6E48,
+        },
+    "pop_r1_pc": {
+        # same
+        "usa": 0x0022B6C8,
+        "eur": 0x0022B6C8,
+        "jpn": 0x0022B6C8,
+        },
+    "payload_stack_addr": {
+        # same
+        "usa": 0x15D630C8,
+        "eur": 0x15D630C8,
+        "jpn": 0x15D630C8,
+        },
+    "stage2_code_va": {
+        # same
+        "usa": 0x002F5D00,
+        "eur": 0x002F5D00,
+        "jpn": 0x002F5D00,
+        },
+    "pop_r2_thru_r6_pc": {
+        # same
+        "usa": 0x0021462C,
+        "eur": 0x00108910,
+        "jpn": 0x0021462C,
+        },
+    "payload_heap_addr": {
+        # same
+        "usa": 0x14200000,
+        "eur": 0x14200000,
+        "jpn": 0x14200000,
+        }
+}
+
+constants_3x_and_later = {
     "fake_free_chunk": {
         "usa": 0x15D62F10,
         "eur": 0x15D62F10,
