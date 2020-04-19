@@ -9,19 +9,18 @@ of the firmware for which the sound app is available.
 
 ## Regions and Versions
 
-| Version | N3DS | O3DS/2DS |
+| Version | N3DS/N2DS | O3DS/2DS |
 | --- | --- | --- |
-| US 3.0-11.2 | ✓ | ✓ |
-| JPN 3.0-11.2 | ✓ | ✓ |
-| EUR 3.0-11.2 | ✓ | ✓ |
-| KOR 9.6-11.2 | ✓ | ✓ |
-| CHN ?-11.2 | ✗ | ✗ |
-| TWN ?-11.2 | ✗ | ✗ |
+| US 2.1-11.3 | ✓ | ✓ |
+| JPN 2.1-11.3 | ✓ | ✓ |
+| EUR 2.1-11.3 | ✓ | ✓ |
+| KOR 4.0-11.3 | ✓ | ✓ |
+| CHN 4.0-11.3 | ✗ | ✗ |
+| TWN 4.1-11.3 | ✗ | ✗ |
 
 If your box is checked, then put [otherapp.bin](https://smealum.github.io/3ds/#otherapp) on the root of your SD card along with soundhax.m4a and launch the song from the sound player.
 
-It can be used along [pre9otherapp](https://github.com/Pirater12/pre9otherapp) to launch an arm9 payload from the sd card on pre 9.0 firms(4.0 - 9.2).
-The bug seems to exist on 2.X sound app too but the rop gadgets and the va to pa translation function need to be updated to make it work.(This was confirmed by installing a 2.1 sound app on 4.1).
+It can be used along [pre9otherapp](https://github.com/hax0kartik/pre9otherapp) to launch an arm9 payload from the SD card on pre 9.0 firms (2.1 - 9.2).
 
 ## Status for KOR/CHN/TWN
 
@@ -32,19 +31,19 @@ The bug seems to exist on 2.X sound app too but the rop gadgets and the va to pa
 | stage2 payload constants | ✓ | ✗ | ✗ |
 
 ## Installation
-1. Download the relevant soundhax-region-console.m4a file for your device.
+1. Download the relevant soundhax-region-console-firmware.m4a file for your device.
 2. Save the soundhax song file and copy to the root of your SD.
 3. Download the [otherapp payload](https://smealum.github.io/3ds/) for your 3DS version, rename it to `otherapp.bin`, and copy it to the root of the SD card.
-4. Download the [Homebrew Starter Kit](https://smealum.github.io/ninjhax2/starter.zip) and unzip to the root of the SD card (if it is not there already).
+4. Download the [Homebrew Menu](https://github.com/fincs/new-hbmenu/releases/latest) and place `boot.3dsx` in the root of the SD card (if it is not there already).
 5. Insert the SD card into the 3DS and start Nintendo 3DS Sound.
-6. Locate your new song and play it to start the Homebrew Launcher!
+6. Locate your new song and play it to start the Homebrew Menu!
 
 Fixing the annoying bird: Click through all of the bird tips then close the app normally. When you exploit it it doesn't save the fact that you've opened the app before, so closing and reopening normally seems to fix this.
 
 ## Build
-Install [Python 2.7](https://python.org) and [devkitpro](https://sourceforge.net/projects/devkitpro/).
+Install [Python 2.7](https://python.org) and [devkitARM](https://devkitpro.org/wiki/Getting_Started).
 
-Then run `python exp.py <usa/eur/jpn/kor> <new/old> <pre5/post5>` to generate `soundhax-*.m4a`.
+Then run `python exp.py <usa/eur/jpn/kor> <new/old> <v21and22/v3xand4x/post5>` to generate `soundhax-*.m4a`.
 
 ## Writeup
 
