@@ -1,24 +1,30 @@
 """Python constants."""
 
 STAGE2_SIZE = 0x300
+OTHERAPP_CODE_VA = 0x00101000
+
+"""
+code_image_size
+
+The size of the loaded image containing .text+.rodata+.data.
+"""
 
 """
 fake_free_chunk
 
-2nd dword needs to be big enough, and it is
-3rd, 4th dword are null so it looks like the list is empty
-0x15D62F10:  0x15D62F48 ; no idea
+2nd dword needs to be big enough, and it is.
+4th dword is null so it looks like the tail of the list is empty.
+
+0x15D62F10:  0x15D62F48 ; don't care
 0x15D62F14:  0x15D62F54 ; >= desired size
-0x15D62F18:  0x00000000 ; prev
-0x15D62F1C:  0x00000000 ; next
+0x15D62F18:  0x00000000 ; prev, don't care as it will end up overwritten
+0x15D62F1C:  0x00000000 ; next = NULL
 """
 
 """
-start/end1
+fake_free_chunk_padding
 
-we don't want the corrupted chunk to get added to the free
-list when it's freed, so put fake size data in the header
-so it doesn't get added.
+Number of stack bytes that need to be inserted before we control pc.
 """
 
 """
@@ -56,29 +62,29 @@ gpu_enqueue_gadget
 """
 
 constants_21_22 = {
+    "code_image_size": {
+        # same
+        "usa": 0x00278000,
+        "eur": 0x00278000,
+        "jpn": 0x00278000,
+        },
     "fake_free_chunk": {
         # same
         "usa": 0x15D62F10,
         "eur": 0x15D62F10,
         "jpn": 0x15D62F10,
         },
+    "fake_free_chunk_padding": {
+        # same
+        "usa": 0xCC,
+        "eur": 0xCC,
+        "jpn": 0xCC,
+        },
     "heapctx": {
         # same
         "usa": 0x0039B560,
         "eur": 0x0039B580,
         "jpn": 0x0039B520,
-        },
-    "start": {
-        # same
-        "usa": 0x140018AF,
-        "eur": 0x140018AF,
-        "jpn": 0x140018AF,
-        },
-    "end1": {
-        # changed
-        "usa": 0x14001920,
-        "eur": 0x14001920,
-        "jpn": 0x14001920,
         },
     "sleep_gadget": {
         "usa": 0x001B5A5C, #same, actually (!!)
@@ -142,11 +148,23 @@ constants_21_22 = {
 }
 
 constants_3x_and_later = {
+    "code_image_size": {
+        "usa": 0x00278000,
+        "eur": 0x00278000,
+        "jpn": 0x00278000,
+        "kor": 0x00291000,
+        },
     "fake_free_chunk": {
         "usa": 0x15D62F10,
         "eur": 0x15D62F10,
         "jpn": 0x15D62F10,
         "kor": 0x15D69A94,
+        },
+    "fake_free_chunk_padding": {
+        "usa": 0xCC,
+        "eur": 0xCC,
+        "jpn": 0xCC,
+        "kor": 0xA4,
         },
     "heapctx": {
         "usa": 0x0039B560,
@@ -154,23 +172,11 @@ constants_3x_and_later = {
         "jpn": 0x0039B520,
         "kor": 0x003B4520,
         },
-    "start": {
-        "usa": 0x140018AF,
-        "eur": 0x140018AF,
-        "jpn": 0x140018AF,
-        "kor": 0x140018AF,
-        },
-    "end1": {
-        "usa": 0x14001920,
-        "eur": 0x14001920,
-        "jpn": 0x14001920,
-        "kor": 0x14001920,
-        },
     "sleep_gadget": {
         "usa": 0x001B5A5C,
         "eur": 0x002F11C0,
         "jpn": 0x002F0F28,
-        "kor": 0x0012A6C8,
+        "kor": 0x0022EAF8, # The gadget isn't correct K/C/T so we use 1 in the called func.
         },
     "gpu_flushcache_gadget": {
         "usa": 0x002E2958,

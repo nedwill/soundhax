@@ -92,37 +92,33 @@
 #define OTHERAPP_ADDR 0x142C0000
 #define OTHERAPP_SIZE 0xC000
 #define OTHERAPP_CODE_VA 0x00101000
-#ifdef NEW
-/* OTHERAPP_CODE_VA + 0x27900000 */
-#define OTHERAPP_CODE_PA 0x27a01000
-#else
-/* OTHERAPP_CODE_VA + 0x23D00000 */
-#if defined(POST5)
-#define OTHERAPP_CODE_PA 0x23e01000
-#else
-#define OTHERAPP_CODE_PA 0x23e01000 - 0x78000
-#endif
-#endif
-#define OTHERAPP_CODE_GPU (OTHERAPP_CODE_PA - 0xc000000)
 
 #define PARAMBLK_ADDR 0x14000000
 
 .text
 .global _start
 _start:
+/* OTHERAPP_CODE_GPU is in r5 */
 /* Initialize stack. */
     mov  sp, #0x10000000
     sub  sp, #0x2C
 /* Tell GSP thread to fuck off. */
     ldr  r0, =GSP_THREAD_OBJ_PTR
-#if defined(KOR)
-    ldr  r0, [r0,#GSP_THREAD_OBJ_PTR_OFFSET]
+#if defined(GSP_THREAD_OBJ_PTR_OFFSET)
+    ldr  r0, [r0, #GSP_THREAD_OBJ_PTR_OFFSET]
 #endif
     mov  r1, #1
     strb r1, [r0, #0x77]
     ldr  r0, [r0, #0x2C]
     svc  0x18
-#if defined(KOR) //A srv-notification thread is running that can't return from the thread-function. With KOR it's within the otherapp .text range. Overwrite the handle it uses so that it won't return from svcWaitSynchronizationN with the next call. Then send a notification so that it returns from waitsync for using the new handle.
+/*
+ * A srv-notification thread is running that can't return from the thread-function.
+ * With KOR it's within the otherapp .text range. Overwrite the handle it uses so that
+ * it won't return from svcWaitSynchronizationN with the next call. Then send a notification
+ * so that it returns from waitsync for using the new handle.
+ */
+#if defined(SRV_SEMAPHORE)
+    mov r0, #0
     svc 0x17 @ svcCreateEvent
     ldr r3, =SRV_SEMAPHORE
     str r1, [r3]
@@ -131,10 +127,6 @@ _start:
     mov r1, #0x1
     bl srv_PublishToSubscriber
 #endif
-/* Mount SD card. */
-//    adr r0, sdmc_str
-//    ldr r1, =FS_MOUNT_SDMC
-//    blx r1
 /* Open otherapp.bin on sdcard root. */
     add  r0, sp, #0xC     // file_handle_out
     adr  r1, otherapp_str // path
@@ -153,7 +145,7 @@ _start:
     ldr  r4, =FS_READ_FILE
     blx  r4
 /* Gspwn it to code segment. */
-    ldr  r0, =OTHERAPP_CODE_GPU // dst
+    mov  r0, r5             // dst
     ldr  r1, =OTHERAPP_ADDR // src
     ldr  r2, =OTHERAPP_SIZE // size
     bl   gsp_gxcmd_texturecopy
@@ -174,6 +166,7 @@ _start:
     add  r2, r0, #0x58   // gsp_handle
     str  r3, [r2]
 /* smea's magic does the rest. */
+    add  sp, #0x2C
     ldr  r0, =PARAMBLK_ADDR  // param_blk
     ldr  r1, =0x10000000 - 4 // stack_ptr
     ldr  r2, =OTHERAPP_CODE_VA
@@ -195,36 +188,36 @@ small_sleep:
 
 /* gsp_gxcmd_texturecopy: Trigger GPU memcpy. */
 gsp_gxcmd_texturecopy:
-    push {lr}
+    push {r4, lr}
     sub  sp, #0x20
-    mov  r4, #0
+    mov  r3, #0
 
-    mov  r5, #4          // cmd_type=TEXTURE_COPY
-    str  r5, [sp]
+    mov  r4, #4          // cmd_type=TEXTURE_COPY
+    str  r4, [sp]
     str  r1, [sp, #4]    // src_ptr=r1
     str  r0, [sp, #8]    // dst_ptr=r0
     str  r2, [sp, #0xC]  // size=r2
-    str  r4, [sp, #0x10] // in_dimensions=0
-    str  r4, [sp, #0x14] // out_dimensions=0
-    mov  r5, #8
-    str  r5, [sp, #0x18] // flags=8
-    str  r4, [sp, #0x1C] // unused=0
+    str  r3, [sp, #0x10] // in_dimensions=0
+    str  r3, [sp, #0x14] // out_dimensions=0
+    mov  r4, #8
+    str  r4, [sp, #0x18] // flags=8
+    str  r3, [sp, #0x1C] // unused=0
 
     mov  r0, sp
     bl   gsp_execute_gpu_cmd
     add  sp, #0x20
-    pop  {pc}
+    pop  {r4, pc}
 .pool
 
 gsp_execute_gpu_cmd:
-    push {lr}
+    push {r4, lr}
     mov  r1, r0
     ldr  r4, =GSP_GET_INTERRUPTRECEIVER
     blx  r4
     add  r0, #0x58
     ldr  r4, =GSP_ENQUEUE_CMD
     blx  r4
-    pop  {pc}
+    pop  {r4, pc}
 .pool
 
 #if defined(SRV_SESSIONHANDLE)
