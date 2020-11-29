@@ -1,92 +1,10 @@
 /* soundhax stage 2 */
 /* ported by nedwill from freakyhax (plutoo), with permission */
 
-#if defined(USA)
-
-#define GSP_THREAD_OBJ_PTR  0x003BFFF0
-#define FS_OPEN_FILE 0x0022929C
-#define GSP_GET_HANDLE 0x0021C960
-#define GSP_GET_INTERRUPTRECEIVER 0x001C805C
-#define GSP_ENQUEUE_CMD 0x001C7BF4
-
-#if defined(V21AND22)
-
-#define FS_READ_FILE 0x002C41F4
-#define GSP_GX_CMD4 0x002E9380
-#define GSP_FLUSH_DATA_CACHE 0x002E2940
-
+#ifdef V21AND22
+#include "stage2_constants_v2.1and2.2.h"
 #else
-
-#define FS_READ_FILE 0x002C4204
-#define GSP_GX_CMD4 0x002E9390
-#define GSP_FLUSH_DATA_CACHE 0x002E2950
-
-#endif
-
-#elif defined(EUR)
-
-#define GSP_THREAD_OBJ_PTR  0x003C0010
-#define FS_OPEN_FILE 0x0022929C
-#define GSP_GET_HANDLE 0x0021C960
-#define GSP_GET_INTERRUPTRECEIVER 0x001C805C
-#define GSP_ENQUEUE_CMD 0x001C7BF4
-
-#if defined(V21AND22)
-
-#define FS_READ_FILE 0x002C4364
-#define GSP_GX_CMD4 0x002E94F0
-#define GSP_FLUSH_DATA_CACHE 0x002E2AB0
-
-#else
-
-#define FS_READ_FILE 0x002C4374
-#define GSP_GX_CMD4 0x002E9500
-#define GSP_FLUSH_DATA_CACHE 0x002E2AC0
-
-#endif
-
-#elif defined(JPN)
-
-#define GSP_THREAD_OBJ_PTR  0x003BFFB0
-#define FS_OPEN_FILE 0x0022929C
-#define GSP_GET_HANDLE 0x0021C960
-#define GSP_GET_INTERRUPTRECEIVER 0x001C805C
-#define GSP_ENQUEUE_CMD 0x001C7BF4
-
-#if defined(V21AND22)
-
-#define FS_READ_FILE 0x002C40CC
-#define GSP_GX_CMD4 0x002E9258
-#define GSP_FLUSH_DATA_CACHE 0x002E2818
-
-#else
-
-#define FS_READ_FILE 0x002C40DC
-#define GSP_GX_CMD4 0x002E9268
-#define GSP_FLUSH_DATA_CACHE 0x002E2828
-
-#endif
-
-#elif defined(KOR)
-
-#if defined(V21AND22)
-#error "KOR region supported for this firmware version"
-#endif
-
-#define SRV_SESSIONHANDLE 0x0038d1c4
-#define SRV_SEMAPHORE 0x0038d1b4
-#define GSP_THREAD_OBJ_PTR  0x0038CA20
-#define GSP_THREAD_OBJ_PTR_OFFSET 0x1C
-#define FS_OPEN_FILE 0x0022F094
-#define FS_READ_FILE 0x0010C83C
-#define GSP_GET_HANDLE 0x00223890
-#define GSP_GX_CMD4 0x001318A0
-#define GSP_FLUSH_DATA_CACHE 0x0012B728
-#define GSP_GET_INTERRUPTRECEIVER 0x00223880
-#define GSP_ENQUEUE_CMD 0x0022109C
-
-#else
-#error "region not supported"
+#include "stage2_constants_post3.0.h"
 #endif
 
 #define OTHERAPP_ADDR 0x142C0000
