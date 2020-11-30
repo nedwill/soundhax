@@ -154,6 +154,7 @@ constants_3x_and_later = {
         "jpn": 0x00278000,
         "kor": 0x00291000,
         "chn": 0x00291000,
+        "twn": 0x0028D000,
         },
     "fake_free_chunk": {
         "usa": 0x15D62F10,
@@ -161,6 +162,7 @@ constants_3x_and_later = {
         "jpn": 0x15D62F10,
         "kor": 0x15D69A94,
         "chn": 0x15D69A94,
+        "twn": 0x15D61E14,
         },
     "fake_free_chunk_padding": {
         "usa": 0xCC,
@@ -168,6 +170,7 @@ constants_3x_and_later = {
         "jpn": 0xCC,
         "kor": 0xA4,
         "chn": 0xA4,
+        "twn": 0xA4,
         },
     "heapctx": {
         "usa": 0x0039B560,
@@ -175,6 +178,7 @@ constants_3x_and_later = {
         "jpn": 0x0039B520,
         "kor": 0x003B4520,
         "chn": 0x003B4520,
+        "twn": 0x003B0540,
         },
     "sleep_gadget": {
         "usa": 0x001B5A5C,
@@ -182,6 +186,7 @@ constants_3x_and_later = {
         "jpn": 0x002F0F28,
         "kor": 0x0022EAF8, # The gadget isn't correct K/C/T so we use 1 in the called func.
         "chn": 0x0022EB3C,
+        "twn": 0x0022EB28,
         },
     "gpu_flushcache_gadget": {
         "usa": 0x002E2958,
@@ -189,6 +194,7 @@ constants_3x_and_later = {
         "jpn": 0x002E2830,
         "kor": 0x0012B730,
         "chn": 0x0012B730,
+        "twn": 0x0012B760,
         },
     "gpu_enqueue_gadget": {
         "usa": 0x002E96FC,
@@ -196,6 +202,7 @@ constants_3x_and_later = {
         "jpn": 0x002E95D4,
         "kor": 0x00131B0C,
         "chn": 0x00131B0C,
+        "twn": 0x00131B3C,
         },
     "memcpy_gadget": {
         "usa": 0x0022DB1C,
@@ -203,6 +210,7 @@ constants_3x_and_later = {
         "jpn": 0x0022DB1C,
         "kor": 0x00228910,
         "chn": 0x00228954,
+        "twn": 0x00228940,
         },
     "pop_r0_pc": {
         "usa": 0x002e6f80,
@@ -210,6 +218,7 @@ constants_3x_and_later = {
         "jpn": 0x002E6E58,
         "kor": 0x0012FA94,
         "chn": 0x0012FA94,
+        "twn": 0x0012FAC4,
         },
     "pop_r1_pc": {
         "usa": 0x0022B6C8,
@@ -217,6 +226,7 @@ constants_3x_and_later = {
         "jpn": 0x0022B6C8,
         "kor": 0x002220E0,
         "chn": 0x00222124,
+        "twn": 0x00222110,
         },
     "payload_stack_addr": {
         "usa": 0x15D630C8,
@@ -224,6 +234,7 @@ constants_3x_and_later = {
         "jpn": 0x15D630C8,
         "kor": 0x15D69C38,
         "chn": 0x15D69C38,
+        "twn": 0x15D61FB8,
         },
     "stage2_code_va": {
         "usa": 0x002F5D00,
@@ -231,6 +242,7 @@ constants_3x_and_later = {
         "jpn": 0x002F5D00,
         "kor": 0x002F5D00,
         "chn": 0x002F5D00,
+        "twn": 0x002F5D00,
         },
     "pop_r2_thru_r6_pc": {
         "usa": 0x0021462C,
@@ -238,6 +250,7 @@ constants_3x_and_later = {
         "jpn": 0x0021462C,
         "kor": 0x00148740,
         "chn": 0x00148748,
+        "twn": 0x00148778,
         },
     "payload_heap_addr": {
         "usa": 0x14200000,
@@ -245,5 +258,6 @@ constants_3x_and_later = {
         "jpn": 0x14200000,
         "kor": 0x14200000,
         "chn": 0x14200000,
+        "twn": 0x14200000,
         }
 }

