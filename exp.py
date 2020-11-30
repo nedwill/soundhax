@@ -3,7 +3,7 @@
 import sys
 from struct import pack
 from subprocess import call
-from constants import STAGE2_SIZE, OTHERAPP_CODE_VA, constants_21_22, constants_3x_and_later
+from constants import STAGE2_SIZE, OTHERAPP_CODE_VA, constants_pre_21, constants_21_22, constants_3x_and_later
 from os import environ, path, name as osname
 
 REGION = "usa"
@@ -22,14 +22,22 @@ if len(sys.argv) > 3:
 if TYPE not in ("old", "new"):
     print("Error: invalid console type: {}".format(TYPE))
     sys.exit(1)
+if FIRM not in ("pre21", "v21and22", "v3xand4x", "post5"):
+    print("Error: invalid system version range: {}".format(FIRM))
+    sys.exit(1)
 if TYPE == "new" and FIRM != "post5":
     print("Error: can only use \"post5\" for N3DS")
     sys.exit(1)
-if FIRM == "v21and22" and REGION not in ("usa", "eur", "jpn"):
+if FIRM in ("pre21", "v21and22") and REGION not in ("usa", "eur", "jpn"):
     print("Error: {} can only be used for USA/EUR/JPN regions".format(FIRM))
     sys.exit(1)
 
-constants = constants_3x_and_later if FIRM != "v21and22" else constants_21_22
+constants = {
+    "pre21": constants_pre_21,
+    "v21and22": constants_21_22,
+    "v3xand4x": constants_3x_and_later,
+    "post5": constants_3x_and_later,
+}[FIRM]
 
 for name, regions in constants.items():
     if REGION not in regions:
@@ -263,8 +271,9 @@ if TYPE == "new":
     fn = './soundhax-{}-{}.m4a'.format(REGION, "n3ds")
 else:
     assert TYPE == "old"
-
-    if FIRM == "v21and22":
+    if FIRM == "pre21":
+        fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "pre2.1")
+    elif FIRM == "v21and22":
         fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v2.1and2.2")
     elif FIRM == "v3xand4x":
       fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v3.xand4.x")

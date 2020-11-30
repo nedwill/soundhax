@@ -1,7 +1,9 @@
 /* soundhax stage 2 */
 /* ported by nedwill from freakyhax (plutoo), with permission */
 
-#ifdef V21AND22
+#if defined(PRE21)
+#include "stage2_constants_pre2.1.h"
+#elif defined(V21AND22)
 #include "stage2_constants_v2.1and2.2.h"
 #else
 #include "stage2_constants_post3.0.h"
