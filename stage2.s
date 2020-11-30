@@ -31,20 +31,18 @@ _start:
     svc  0x18
 /*
  * A srv-notification thread is running that can't return from the thread-function.
- * With KOR it's within the otherapp .text range. Overwrite the handle it uses so that
- * it won't return from svcWaitSynchronizationN with the next call. Then send a notification
- * so that it returns from waitsync for using the new handle.
+ * Overwrite the handle it uses so that it won't return from svcWaitSynchronizationN
+ * with the next call. Then send a notification so that it returns from waitsync and
+ * uses the new handle.
  */
-#if defined(SRV_SEMAPHORE)
     mov r0, #0
-    svc 0x17 @ svcCreateEvent
+    svc 0x17 // svcCreateEvent
     ldr r3, =SRV_SEMAPHORE
     str r1, [r3]
 
     ldr r0, =0x207
     mov r1, #0x1
     bl srv_PublishToSubscriber
-#endif
 /* Open otherapp.bin on sdcard root. */
     add  r0, sp, #0xC     // file_handle_out
     adr  r1, otherapp_str // path
@@ -138,7 +136,6 @@ gsp_execute_gpu_cmd:
     pop  {r4, pc}
 .pool
 
-#if defined(SRV_SESSIONHANDLE)
 srv_PublishToSubscriber:
     push {r4, lr}
     mrc p15, 0, r4, cr13, cr0, 3
@@ -157,7 +154,6 @@ srv_PublishToSubscriber:
     ldrge r0, [r4, #4]
     pop {r4, pc}
 .pool
-#endif
 
 /* Force assembler error if payload becomes greater than 0x800. */
 .org 0x300, 0x45

@@ -12,6 +12,9 @@
 #define GSP_GX_CMD4 0x002E9380
 #define GSP_FLUSH_DATA_CACHE 0x002E2940
 
+#define SRV_SESSIONHANDLE 0x00374258
+#define SRV_SEMAPHORE 0x00374248
+
 #elif defined(EUR)
 
 #define GSP_THREAD_OBJ_PTR 0x003C0010
@@ -24,6 +27,9 @@
 #define GSP_GX_CMD4 0x002E94F0
 #define GSP_FLUSH_DATA_CACHE 0x002E2AB0
 
+#define SRV_SESSIONHANDLE 0x00374258
+#define SRV_SEMAPHORE 0x00374248
+
 #elif defined(JPN)
 
 #define GSP_THREAD_OBJ_PTR 0x003BFFB0
@@ -35,6 +41,9 @@
 #define FS_READ_FILE 0x002C40CC
 #define GSP_GX_CMD4 0x002E9258
 #define GSP_FLUSH_DATA_CACHE 0x002E2818
+
+#define SRV_SESSIONHANDLE 0x00374258
+#define SRV_SEMAPHORE 0x00374248
 
 #else
 #error "Region not supported for this system version range"
