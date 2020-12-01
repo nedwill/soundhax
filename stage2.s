@@ -29,6 +29,15 @@ _start:
     strb r1, [r0, #0x77]
     ldr  r0, [r0, #0x2C]
     svc  0x18
+
+/* Tell another problematic thread to fuck off as well. */
+    ldr  r0, =THREAD8_OBJ
+    mov  r1, #0
+    strb r1, [r0, #0x0D]
+    ldr  r0, =THREAD8_EVENT_HANDLE
+    ldr  r0, [r0]
+    svc  0x18
+
 /*
  * A srv-notification thread is running that can't return from the thread-function.
  * Overwrite the handle it uses so that it won't return from svcWaitSynchronizationN
