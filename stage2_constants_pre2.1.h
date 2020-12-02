@@ -1,6 +1,23 @@
 /* stage2 constants for system versions v1.0, v1.1 and v2.0 */
 
-#if defined(EUR)
+#if defined(USA)
+
+#define FS_OPEN_FILE 0x00227980
+#define GSP_GET_HANDLE 0x0021ACC4
+#define GSP_GET_INTERRUPTRECEIVER 0x001C74C8
+#define GSP_ENQUEUE_CMD 0x001C616C
+
+#define FS_READ_FILE 0x002C8254
+#define GSP_GX_CMD4 0x002EAFD4
+#define GSP_FLUSH_DATA_CACHE 0x002E5270
+
+#define SRV_SESSIONHANDLE 0x00370BF8
+#define SRV_SEMAPHORE 0x00370BE8
+
+#define THREAD8_EVENT_HANDLE 0x003AC340
+#define THREAD8_OBJ 0x003AD690
+
+#elif defined(EUR)
 
 #define FS_OPEN_FILE 0x00227B10
 #define GSP_GET_HANDLE 0x0021AE54

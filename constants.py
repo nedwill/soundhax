@@ -63,45 +63,59 @@ gpu_enqueue_gadget
 
 constants_pre_21 = {
     "code_image_size": {
+        "usa": 0x00272000,
         "eur": 0x00272000,
         },
     "fake_free_chunk": {
+        "usa": 0x15D7AC80,
         "eur": 0x15D7AC80,
         },
     "fake_free_chunk_padding": {
+        "usa": 0x14,
         "eur": 0x14,
         },
     "heapctx": {
+        "usa": 0x00395560,
         "eur": 0x00395580,
         },
     "sleep_gadget": {
+        "usa": 0x002F0CD4,
         "eur": 0x002F0E44,
         },
     "gpu_flushcache_gadget": {
+        "usa": 0x002E5278,
         "eur": 0x002E53E8,
         },
     "gpu_enqueue_gadget": {
+        "usa": 0x002EAEFC,
         "eur": 0x002EB06C,
         },
     "memcpy_gadget": {
+        "usa": 0x0022CDE0,
         "eur": 0x0022CF70,
         },
     "pop_r0_pc": {
+        "usa": 0x002E8DA4,
         "eur": 0x002E8F14,
         },
     "pop_r1_pc": {
+        "usa": 0x0022A644,
         "eur": 0x0022A7D4,
         },
     "payload_stack_addr": {
+        "usa": 0x15D7AD90,
         "eur": 0x15D7AD90,
         },
     "stage2_code_va": {
+        "usa": 0x002F6D00,
         "eur": 0x002F6D00,
         },
     "pop_r2_thru_r6_pc": {
+        "usa": 0x00107F98,
         "eur": 0x00107F98,
         },
     "payload_heap_addr": {
+        "usa": 0x14200000,
         "eur": 0x14200000,
         }
 }
