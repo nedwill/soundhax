@@ -21,10 +21,8 @@ _start:
     mov  sp, #0x10000000
     sub  sp, #0x2C
 /* Tell GSP thread to fuck off. */
-    ldr  r0, =GSP_THREAD_OBJ_PTR
-#if defined(GSP_THREAD_OBJ_PTR_OFFSET)
-    ldr  r0, [r0, #GSP_THREAD_OBJ_PTR_OFFSET]
-#endif
+    ldr  r0, =GSP_GET_INTERRUPTRECEIVER
+    blx  r0
     mov  r1, #1
     strb r1, [r0, #0x77]
     ldr  r0, [r0, #0x2C]
