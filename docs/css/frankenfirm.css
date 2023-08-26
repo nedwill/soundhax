@@ -1,0 +1,261 @@
+body {
+    background-color: black;
+}
+
+.logo img{
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    display: block;
+    padding-top: 4%;
+}
+
+.text p {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    width: 30%;
+    text-align: center;
+    display: block;
+    padding-top: 4%;
+    padding-bottom: 0;
+}
+.text img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    display: block;
+    padding-top: 0;
+}
+
+.graphics img{
+    position:fixed;
+    bottom:0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    z-index: -99;
+}
+
+/*.downloads {
+  padding-top: 5%;
+}*/
+
+.hidden {
+    display: none;
+}
+
+button.donate {
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  word-spacing: 30px;
+  background-color: #FFFFFF;
+  text-align: center;
+  border:none;
+  letter-spacing: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  width:240px;
+  color: black;
+  min-width: 200px;
+}
+
+p {
+  font-family: 'PT Sans Caption', sans-serif;
+  color: white;
+}
+select {
+  font-family: 'PT Sans Caption', sans-serif;
+  text-transform: uppercase;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  cursor: pointer;
+  border: solid 2px;
+  border-color: white;
+  background-color: rgba(0,0,0,0);
+  color: white;
+  margin: 0;
+}
+option {
+  font-family: 'PT Sans Caption', sans-serif;
+  text-transform: uppercase;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  background-color: rgba(0,0,0,255);
+  color: white;
+}
+button {
+  font-family: 'PT Sans Caption', sans-serif;
+  text-transform: uppercase;
+  padding-top: 10px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  cursor: pointer;
+}
+
+.btn-group.error {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 2%;
+}
+
+.btn-group.firmware {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; 
+}
+
+.btn-group.console {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.btn-group.forced {
+  pointer-events: none;
+}
+
+button.group{
+  border: solid 2px;
+  border-color: white;
+  background-color: rgba(0,0,0,0);
+  color: white;
+  margin: 0;
+}
+button.group:hover {
+  background-color: #333333;
+}
+
+button.group.selected{
+  background-color: #FFFFFF;
+  color: black;
+}
+
+button#download{
+  margin-top: 2%
+}
+
+button#download.active{
+  background-color: #FFFFFF;
+  color: black;
+}
+
+button#download{
+  font-weight: 700;
+  color: white;
+  font-size: 1.2rem;
+  background-color: rgba(0,0,0,0);
+  border:solid 2px;
+  border-color: white;
+  letter-spacing: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  width:280px;
+  text-align: center;
+  min-width: 200px;
+  height: 45px;
+}
+
+.round {
+  border-radius: 2px;
+}
+
+@media only screen and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 3) {
+  .logo img{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    display: block;
+    padding-top: 4%;
+  }
+
+  .text img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    display: block;
+    padding-top: 5%;
+  }
+
+  .graphics img{
+    position:fixed;
+    bottom:0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    z-index: -99;
+  }
+  p {
+    font-size: 50px;
+  }
+
+  button {
+    font-family: 'PT Sans Caption', sans-serif;
+    text-transform: uppercase;
+    font-size: 50px;
+    padding-top: 20px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+  }
+  button.group{
+    border: solid 5px;
+    border-color: white;
+    background-color: rgba(0,0,0,0);
+    color: white;
+    margin: 0;
+  }
+ div.downloads {
+    margin-top: 15%
+  }
+
+  button#download{
+    padding-top: 20px;
+    padding-right: 40px;
+    padding-bottom: 70px;
+    padding-left: 40px;
+    font-weight: 700;
+    color: white;
+    font-size: 50px;
+    background-color: rgba(0,0,0,0);
+    border:solid 5px;
+    border-color: white;
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    justify-content: center;
+    width:60%;
+    text-align: center;
+  }
+  button#download.active{
+    background-color: #FFFFFF;
+    color: black;
+  }
+  button.donate {
+    margin-top: 30px;
+    font-weight: 700;
+    font-size: 50px;
+    word-spacing: 30px;
+    background-color: #FFFFFF;
+    text-align: center;
+    border:none;
+    letter-spacing: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    color: black;
+  }
+}

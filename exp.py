@@ -9,6 +9,7 @@ from os import environ, path, name as osname
 REGION = "usa"
 TYPE = "old"
 FIRM = "post5"
+POST5FRANKEN = False
 if len(sys.argv) > 1:
     REGION = sys.argv[1].lower()
 
@@ -17,6 +18,9 @@ if len(sys.argv) > 2:
 
 if len(sys.argv) > 3:
     FIRM = sys.argv[3].lower()
+
+if len(sys.argv) > 4:
+    POST5FRANKEN = sys.argv[4].lower() == "true"
 
 # Check for impossible combinations
 if TYPE not in ("old", "new"):
@@ -30,6 +34,9 @@ if TYPE == "new" and FIRM != "post5":
     sys.exit(1)
 if FIRM in ("pre21", "v21and22") and REGION not in ("usa", "eur", "jpn"):
     print("Error: {} can only be used for USA/EUR/JPN regions".format(FIRM))
+    sys.exit(1)
+if FIRM in ("v3xand4x", "post5") and POST5FRANKEN:
+    print("Error: use normal \"post5\", no need for franken build")
     sys.exit(1)
 
 constants = {
@@ -112,7 +119,7 @@ def code_va_to_pa(va):
     off = va - 0x00100000
     appmem_end = 0x24000000 if TYPE == "old" else 0x27C00000
 
-    if FIRM == "post5" or TYPE == "new":
+    if FIRM == "post5" or TYPE == "new" or POST5FRANKEN:
         return appmem_end - 0x00200000 + off
     else:
         return appmem_end - code_image_size + off
@@ -272,9 +279,15 @@ if TYPE == "new":
 else:
     assert TYPE == "old"
     if FIRM == "pre21":
-        fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "pre2.1")
+        if POST5FRANKEN:
+            fn = './soundhax-{}-{}-{}-post5franken.m4a'.format(REGION, "o3ds", "pre2.1")
+        else:
+            fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "pre2.1")
     elif FIRM == "v21and22":
-        fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v2.1and2.2")
+        if POST5FRANKEN:
+            fn = './soundhax-{}-{}-{}-post5franken.m4a'.format(REGION, "o3ds", "v2.1and2.2")
+        else:
+            fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v2.1and2.2")
     elif FIRM == "v3xand4x":
       fn = './soundhax-{}-{}-{}.m4a'.format(REGION, "o3ds", "v3.xand4.x")
     else :
